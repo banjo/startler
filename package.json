@@ -1,24 +1,24 @@
 {
-    "name": "git-recent-branch",
+    "name": "clistart",
     "type": "module",
-    "version": "0.0.4",
+    "version": "0.0.0",
     "private": false,
     "description": "",
     "author": "Anton Ödman <anton.odman@gmail.com>",
     "license": "MIT",
-    "homepage": "https://github.com/banjo/git-recent-branch#readme",
+    "homepage": "https://github.com/banjo/clistart#readme",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/banjo/git-recent-branch.git"
+        "url": "git+https://github.com/banjo/clistart.git"
     },
-    "bugs": "https://github.com/banjo/git-recent-branch/issues",
+    "bugs": "https://github.com/banjo/clistart/issues",
     "keywords": [],
     "sideEffects": false,
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "bin": {
-        "git-recent-branch": "dist/index.js"
+        "clistart": "dist/index.js"
     },
     "exports": {
         ".": {
