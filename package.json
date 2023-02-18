@@ -1,0 +1,65 @@
+{
+    "name": "git-recent-branch",
+    "type": "module",
+    "version": "0.0.4",
+    "private": false,
+    "description": "",
+    "author": "Anton Ödman <anton.odman@gmail.com>",
+    "license": "MIT",
+    "homepage": "https://github.com/banjo/git-recent-branch#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/banjo/git-recent-branch.git"
+    },
+    "bugs": "https://github.com/banjo/git-recent-branch/issues",
+    "keywords": [],
+    "sideEffects": false,
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "bin": {
+        "git-recent-branch": "dist/index.js"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/index.cjs",
+            "import": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist/*"
+    ],
+    "scripts": {
+        "build": "tsup",
+        "dev": "tsup --watch",
+        "lint": "eslint .",
+        "prepublishOnly": "nr build",
+        "release": "bumpp && npm publish",
+        "start": "esno src/index.ts",
+        "test": "vitest --watch=false",
+        "test:dev": "vitest",
+        "typecheck": "tsc --noEmit",
+        "format": "npx prettier --write ."
+    },
+    "devDependencies": {
+        "@antfu/ni": "^0.20.0",
+        "@banjoanton/replacer": "^0.0.2",
+        "@banjoanton/utils": "^0.1.35",
+        "@clack/prompts": "^0.4.3",
+        "@types/minimist": "^1.2.2",
+        "@types/node": "^18.13.0",
+        "bumpp": "^8.2.1",
+        "eslint": "^8.34.0",
+        "esno": "^0.16.3",
+        "execa": "^7.0.0",
+        "minimist": "^1.2.8",
+        "picocolors": "^1.0.0",
+        "pnpm": "^7.27.0",
+        "prettier": "^2.8.4",
+        "tsup": "^6.6.3",
+        "typescript": "^4.9.5",
+        "vite": "^4.1.2",
+        "vitest": "^0.28.5"
+    }
+}
