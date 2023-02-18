@@ -48,5 +48,8 @@ export const common = async (command: Command, name: string) => {
 
     s.stop("Updated names ✅");
 
+    const packageJson = await import(`../../${name}/package.json`);
+    console.log(packageJson);
+
     outro(`Created a new ${command} project named ${name} ✅`);
 };

@@ -24,6 +24,7 @@ async function main() {
             common(command, name);
             break;
         case "userscript":
+            // TODO: rename to pkg-name in project
             common(command, name);
             break;
         default:
