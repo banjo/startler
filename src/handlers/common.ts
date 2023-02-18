@@ -1,9 +1,10 @@
 import { replacer } from "@banjoanton/replacer";
 import { intro, outro, spinner } from "@clack/prompts";
 import { existsSync } from "fs";
+import { PackageJson } from "type-fest";
 import { PREVIOUS_NAME, SOURCES } from "../constants";
 import { Command } from "../types";
-import { cli } from "../utils";
+import { cli, exitOnFail } from "../utils";
 
 export const common = async (command: Command, name: string) => {
     intro(`Creating a new ${command} project named ${name}`);
@@ -21,7 +22,7 @@ export const common = async (command: Command, name: string) => {
 
     if (!cloneAction) {
         s.stop("Failed to fetch template from Github ❌");
-        process.exit(1);
+        exitOnFail();
     }
 
     s.stop("Fetched template from Github ✅");
@@ -32,7 +33,7 @@ export const common = async (command: Command, name: string) => {
 
     if (!removeAction) {
         s.stop("Failed to remove .git directory ❌");
-        process.exit(1);
+        exitOnFail();
     }
 
     s.stop("Removed .git directory ✅");
@@ -48,8 +49,12 @@ export const common = async (command: Command, name: string) => {
 
     s.stop("Updated names ✅");
 
-    const packageJson = await import(`../../${name}/package.json`);
-    console.log(packageJson);
+    const packageJson: PackageJson = await import(`../../${name}/package.json`);
+
+    if (!packageJson) {
+        s.stop("Failed to read package.json ❌");
+        exitOnFail();
+    }
 
     outro(`Created a new ${command} project named ${name} ✅`);
 };

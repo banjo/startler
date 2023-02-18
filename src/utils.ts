@@ -1,3 +1,4 @@
+import { outro } from "@clack/prompts";
 import { execa } from "execa";
 
 export const cli = async (
@@ -25,5 +26,15 @@ export const cli = async (
         }
 
         return null;
+    }
+};
+
+export const exitOnFail = (error?: string) => {
+    if (error) {
+        outro(error);
+        process.exit(1);
+    } else {
+        outro("Failed to create project 😢");
+        process.exit(1);
     }
 };
