@@ -1,8 +1,7 @@
 import { replacer } from "@banjoanton/replacer";
 import { intro, outro, spinner } from "@clack/prompts";
 import { existsSync } from "fs";
-import { previousName } from "../output";
-import { sources } from "../sources";
+import { PREVIOUS_NAME, SOURCES } from "../constants";
 import { cli } from "../utils";
 
 export const lib = async (name: string) => {
@@ -16,7 +15,7 @@ export const lib = async (name: string) => {
     const s = spinner();
     s.start("Fetching template from Github");
 
-    const cloneAction = await cli("git", ["clone", sources.lib, name]);
+    const cloneAction = await cli("git", ["clone", SOURCES.lib, name]);
 
     if (!cloneAction) {
         s.stop("Failed to fetch template from Github ❌");
@@ -41,7 +40,7 @@ export const lib = async (name: string) => {
     const { handleFiles, commit } = await replacer([`./${name}/**/*`]);
 
     handleFiles(({ replaceAll }) => {
-        replaceAll(previousName, name);
+        replaceAll(PREVIOUS_NAME, name);
     });
     commit();
 

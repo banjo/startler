@@ -1,5 +1,5 @@
 import minimist from "minimist";
-import { helpMessage } from "./output";
+import { HELP_MESSAGE } from "./constants";
 import { Command, commands } from "./types";
 
 const isCommand = (arg: string): arg is Command => {
@@ -11,13 +11,13 @@ export const parseCommand = (argv: minimist.ParsedArgs): Command => {
 
     if (!command) {
         console.error("No command specified.\n");
-        console.error(helpMessage);
+        console.error(HELP_MESSAGE);
         process.exit(1);
     }
 
     if (!isCommand(command)) {
         console.log(`Unknown command: ${command}\n`);
-        console.error(helpMessage);
+        console.error(HELP_MESSAGE);
         process.exit(1);
     }
 
@@ -29,7 +29,7 @@ export const parseName = (argv: minimist.ParsedArgs): string => {
 
     if (!name) {
         console.error("No name specified.\n");
-        console.error(helpMessage);
+        console.error(HELP_MESSAGE);
         process.exit(1);
     }
 

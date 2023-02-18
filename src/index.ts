@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import minimist from "minimist";
+import { HELP_MESSAGE } from "./constants";
 import { lib } from "./handlers/lib";
-import { helpMessage } from "./output";
 import { parseCommand, parseName } from "./parseArgs";
 
 const argv = minimist(process.argv.slice(2));
@@ -11,7 +11,7 @@ const showHelp = argv._.some((arg) => ["-h", "--help"].includes(arg));
 console.log(); // Add a newline
 
 if (showHelp) {
-    console.log(helpMessage);
+    console.log(HELP_MESSAGE);
     process.exit(0);
 }
 
