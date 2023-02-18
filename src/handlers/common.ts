@@ -1,12 +1,14 @@
 import { replacer } from "@banjoanton/replacer";
 import { intro, outro, spinner } from "@clack/prompts";
 import { existsSync } from "fs";
-import { PackageJson } from "type-fest";
 import { PREVIOUS_NAME, SOURCES } from "../constants";
+import { handleDependencies } from "../deps";
 import { Command } from "../types";
-import { cli, exitOnFail } from "../utils";
+import { cli, exitOnFail, optionsForCli } from "../utils";
 
 export const common = async (command: Command, name: string) => {
+    const options = optionsForCli(name);
+
     intro(`Creating a new ${command} project named ${name}`);
 
     if (existsSync(name)) {
@@ -27,16 +29,23 @@ export const common = async (command: Command, name: string) => {
 
     s.stop("Fetched template from Github ✅");
 
-    s.start("Removing .git directory");
+    s.start("Initializing git");
 
-    const removeAction = await cli("rm", ["-rf", `./${name}/.git`]);
+    const removeAction = await cli("rm", ["-rf", `.git`], options);
 
     if (!removeAction) {
         s.stop("Failed to remove .git directory ❌");
         exitOnFail();
     }
 
-    s.stop("Removed .git directory ✅");
+    const initAction = await cli("git", ["init"], options);
+
+    if (!initAction) {
+        s.stop("Failed to initialize git ❌");
+        exitOnFail();
+    }
+
+    s.stop("Initialized git ✅");
 
     s.start("Updating names");
 
@@ -49,12 +58,24 @@ export const common = async (command: Command, name: string) => {
 
     s.stop("Updated names ✅");
 
-    const packageJson: PackageJson = await import(`../../${name}/package.json`);
+    const packageJson = await import(`../../${name}/package.json`);
 
     if (!packageJson) {
         s.stop("Failed to read package.json ❌");
         exitOnFail();
     }
+
+    s.start("Installing dependencies");
+
+    await handleDependencies({ command, type: "deps", packageJson, name });
+    await handleDependencies({
+        command,
+        type: "devDeps",
+        packageJson,
+        name,
+    });
+
+    s.stop("Installed dependencies ✅");
 
     outro(`Created a new ${command} project named ${name} ✅`);
 };

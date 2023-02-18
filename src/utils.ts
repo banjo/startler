@@ -1,14 +1,19 @@
 import { outro } from "@clack/prompts";
-import { execa } from "execa";
+import { execa, Options } from "execa";
 
 export const cli = async (
     command: string,
     args: string[],
+    options?: Options,
     errorHandler?: (error: Error) => void
 ) => {
     try {
-        const { stdout, stderr } = await execa(command, args);
-        return { stdout, stderr };
+        const {
+            stdout,
+            stderr,
+            command: stdin,
+        } = await execa(command, args, options);
+        return { stdout, stderr, stdin };
     } catch (error) {
         let e: Error;
         if (typeof error === "string") {
@@ -28,6 +33,10 @@ export const cli = async (
         return null;
     }
 };
+
+export const optionsForCli = (name: string) => ({
+    cwd: `./${name}`,
+});
 
 export const exitOnFail = (error?: string) => {
     if (error) {

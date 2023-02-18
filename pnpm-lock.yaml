@@ -7,6 +7,7 @@ specifiers:
   '@clack/prompts': ^0.4.3
   '@types/minimist': ^1.2.2
   '@types/node': ^18.13.0
+  '@types/prompts': ^2.4.2
   bumpp: ^8.2.1
   eslint: ^8.34.0
   esno: ^0.16.3
@@ -16,11 +17,15 @@ specifiers:
   pnpm: ^7.27.0
   prettier: ^2.8.4
   prompts: ^2.4.2
+  toastler: ^0.0.4
   tsup: ^6.6.3
   type-fest: ^3.6.0
   typescript: ^4.9.5
   vite: ^4.1.2
   vitest: ^0.28.5
+
+dependencies:
+  toastler: 0.0.4
 
 devDependencies:
   '@antfu/ni': 0.20.0
@@ -29,6 +34,7 @@ devDependencies:
   '@clack/prompts': 0.4.3
   '@types/minimist': 1.2.2
   '@types/node': 18.13.0
+  '@types/prompts': 2.4.2
   bumpp: 8.2.1
   eslint: 8.34.0
   esno: 0.16.3
@@ -597,6 +603,13 @@ packages:
 
   /@types/node/18.13.0:
     resolution: {integrity: sha512-gC3TazRzGoOnoKAhUx+Q0t8S9Tzs74z7m0ipwGpSqQrleP14hKxP4/JUeEQcD3W1/aIpnWl8pHowI7WokuZpXg==}
+    dev: true
+
+  /@types/prompts/2.4.2:
+    resolution: {integrity: sha512-TwNx7qsjvRIUv/BCx583tqF5IINEVjCNqg9ofKHRlSoUHE62WBHrem4B1HGXcIrG511v29d1kJ9a/t2Esz7MIg==}
+    dependencies:
+      '@types/node': 18.13.0
+      kleur: 3.0.3
     dev: true
 
   /@vitest/expect/0.28.5:
@@ -2216,6 +2229,10 @@ packages:
     dependencies:
       is-number: 7.0.0
     dev: true
+
+  /toastler/0.0.4:
+    resolution: {integrity: sha512-h6NxY71vZjPZ20bG/N6kBf1+nlqzzGsBahq1Uy3TVntVu5tEncTem3zkfWrxuvGXilraEMiwMpIaa5HTpgyLXQ==}
+    dev: false
 
   /tr46/1.0.1:
     resolution: {integrity: sha512-dTpowEjclQ7Kgx5SdBkqRzVhERQXov8/l9Ft9dVM9fmg0W0KQSVaXX9T4i6twCPNtYiZM53lpSSUAwJbFPOHxA==}
