@@ -2,11 +2,11 @@
 
 import minimist from "minimist";
 import { HELP_MESSAGE } from "./constants";
-import { lib } from "./handlers/lib";
+import { common } from "./handlers/common";
 import { parseCommand, parseName } from "./parseArgs";
 
 const argv = minimist(process.argv.slice(2));
-const showHelp = argv._.some((arg) => ["-h", "--help"].includes(arg));
+const showHelp = argv.h || argv.help || !argv._.length;
 
 console.log(); // Add a newline
 
@@ -21,12 +21,11 @@ const name = parseName(argv);
 async function main() {
     switch (command) {
         case "lib":
-            lib(name);
+            common(command, name);
             break;
         case "userscript":
-            console.log(`Creating a new userscript project named ${name}`);
+            common(command, name);
             break;
-
         default:
             console.error(`Unknown command: ${command}`);
             process.exit(1);

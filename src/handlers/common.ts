@@ -2,10 +2,11 @@ import { replacer } from "@banjoanton/replacer";
 import { intro, outro, spinner } from "@clack/prompts";
 import { existsSync } from "fs";
 import { PREVIOUS_NAME, SOURCES } from "../constants";
+import { Command } from "../types";
 import { cli } from "../utils";
 
-export const lib = async (name: string) => {
-    intro(`Creating a new library project named ${name}`);
+export const common = async (command: Command, name: string) => {
+    intro(`Creating a new ${command} project named ${name}`);
 
     if (existsSync(name)) {
         outro(`Directory ${name} already exists ❌`);
@@ -15,7 +16,8 @@ export const lib = async (name: string) => {
     const s = spinner();
     s.start("Fetching template from Github");
 
-    const cloneAction = await cli("git", ["clone", SOURCES.lib, name]);
+    const source = SOURCES[command];
+    const cloneAction = await cli("git", ["clone", source, name]);
 
     if (!cloneAction) {
         s.stop("Failed to fetch template from Github ❌");
@@ -46,5 +48,5 @@ export const lib = async (name: string) => {
 
     s.stop("Updated names ✅");
 
-    outro(`Created a new library project named ${name} ✅`);
+    outro(`Created a new ${command} project named ${name} ✅`);
 };
