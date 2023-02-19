@@ -1,6 +1,6 @@
 import { isEqual } from "@banjoanton/utils";
 import { multiselect, spinner } from "@clack/prompts";
-import { DEPS } from "./constants";
+import { DEPS } from "./config";
 import { Command, DependencyType } from "./types";
 import { cli, exitOnFail, optionsForCli } from "./utils";
 

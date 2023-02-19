@@ -1,7 +1,7 @@
 import { replacer } from "@banjoanton/replacer";
 import { intro, outro, spinner } from "@clack/prompts";
 import { existsSync } from "fs";
-import { PREVIOUS_NAME, SOURCES } from "../constants";
+import { PREVIOUS_NAME, SOURCES } from "../config";
 import { handleDependencies } from "../deps";
 import { Command } from "../types";
 import { cli, exitOnFail, optionsForCli } from "../utils";
