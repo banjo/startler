@@ -73,23 +73,23 @@ export const handleDependencies = async ({
     name: string;
 }) => {
     const options = optionsForCli(name);
+    const isDependencies = type === "deps";
+    const dependencies = isDependencies
+        ? packageJson.dependencies
+        : packageJson.devDependencies;
+    const depsText = isDependencies ? "dependencies" : "devDependencies";
 
     const preSelectedDeps = getPreSelectedDeps({
         type,
         command,
-        depsFromPackage: Object.keys(packageJson?.devDependencies),
+        depsFromPackage: Object.keys(dependencies),
     });
 
     const possibleDeps = getPossibleDeps(command, type);
 
-    if (isEqual(possibleDeps, preSelectedDeps)) {
-        return;
-    }
-
-    const depsText = type === "deps" ? "dependencies" : "devDependencies";
-
     const answers = (await multiselect({
         message: `Which ${depsText} do you want to install?`,
+        required: false,
         options: possibleDeps.map((d) => ({ value: d, label: d })),
         initialValue: JSON.parse(JSON.stringify(preSelectedDeps)), // TODO: update deep clone
     })) as string[];

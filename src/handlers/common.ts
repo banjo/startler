@@ -65,7 +65,7 @@ export const common = async (command: Command, name: string) => {
         exitOnFail();
     }
 
-    s.start("Preparing dependencies");
+    s.start("Preparing for dependencies");
 
     // for husky
     const installDepsAction = await cli("pnpm", ["install"], options);
@@ -74,7 +74,7 @@ export const common = async (command: Command, name: string) => {
         exitOnFail();
     }
 
-    s.stop("Prepared dependencies ✅");
+    s.stop("Prepared for dependencies ✅");
 
     await handleDependencies({ command, type: "deps", packageJson, name });
     await handleDependencies({
@@ -83,6 +83,17 @@ export const common = async (command: Command, name: string) => {
         packageJson,
         name,
     });
+
+    s.start("Updating to latest versions");
+
+    const updateAction = await cli("pnpm", ["up", "--latest"], options);
+
+    if (!updateAction) {
+        s.stop(`Failed to update dependencies ❌`);
+        exitOnFail();
+    }
+
+    s.stop(`Updated dependencies to latest versions ✅`);
 
     outro(`Created a new ${command} project named ${name} ✅`);
 };
