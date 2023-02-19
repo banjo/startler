@@ -1,6 +1,6 @@
-# clistart
+# startler
 
-[![NPM version](https://img.shields.io/npm/v/clistart?color=%23c53635&label=%20)](https://www.npmjs.com/package/clistart)
+[![NPM version](https://img.shields.io/npm/v/startler?color=%23c53635&label=%20)](https://www.npmjs.com/package/startler)
 
 A simple CLI application to kickstart new projects.
 
@@ -14,18 +14,18 @@ A simple CLI application to kickstart new projects.
 ## Install
 
 ```bash
-npm install clistart -g
+npm install startler -g
 ```
 
 ## Usage
 
 ```bash
 # create a typescript library
-clistart lib <name-of-project>
+startler lib <name-of-project>
 
 # create a userscript project
-clistart userscript <name-of-project>
+startler userscript <name-of-project>
 
 # create a cli application
-clistart cli <name-of-project>
+startler cli <name-of-project>
 ```

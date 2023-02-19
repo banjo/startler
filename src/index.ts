@@ -34,7 +34,7 @@ const userscript = cliCommand(
 
 cli(
     {
-        name: "clistart",
+        name: "startler",
         version,
         commands: [lib, userscript],
         help: {

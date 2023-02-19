@@ -1,24 +1,24 @@
 {
-    "name": "clistart",
+    "name": "startler",
     "type": "module",
     "version": "0.0.1",
     "private": false,
     "description": "",
     "author": "Anton Ödman <anton.odman@gmail.com>",
     "license": "MIT",
-    "homepage": "https://github.com/banjo/clistart#readme",
+    "homepage": "https://github.com/banjo/startler#readme",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/banjo/clistart.git"
+        "url": "git+https://github.com/banjo/startler.git"
     },
-    "bugs": "https://github.com/banjo/clistart/issues",
+    "bugs": "https://github.com/banjo/startler/issues",
     "keywords": [],
     "sideEffects": false,
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "bin": {
-        "clistart": "dist/index.js"
+        "startler": "dist/index.js"
     },
     "exports": {
         ".": {
