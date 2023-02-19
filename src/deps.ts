@@ -1,44 +1,8 @@
 import { isEqual } from "@banjoanton/utils";
 import { multiselect, spinner } from "@clack/prompts";
-import { Command, Dependencies, Dependency, DependencyType } from "./types";
+import { DEPS } from "./constants";
+import { Command, DependencyType } from "./types";
 import { cli, exitOnFail, optionsForCli } from "./utils";
-
-const DEPS: Dependencies & { common: Dependency } = {
-    common: {
-        deps: [],
-        devDeps: [
-            "@antfu/ni",
-            "@banjoanton/replacer",
-            "@banjoanton/utils",
-            "bumpp",
-            "eslint",
-            "pnpm",
-            "prettier",
-            "type-fest",
-        ],
-    },
-    userscript: {
-        deps: ["@banjoanton/spa-runner", "toastler"],
-        devDeps: [],
-    },
-    cli: {
-        deps: [],
-        devDeps: [
-            "@clack/prompts",
-            "@types/minimist",
-            "@types/prompts",
-            "execa",
-            "minimist",
-            "picocolors",
-            "prompts",
-            "cleye",
-        ],
-    },
-    lib: {
-        deps: [],
-        devDeps: [],
-    },
-};
 
 const getDeps = (command: Command, type: DependencyType) => {
     return [...DEPS[command][type], ...DEPS.common[type]];
