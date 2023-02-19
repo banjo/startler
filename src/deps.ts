@@ -73,11 +73,6 @@ export const handleDependencies = async ({
     name: string;
 }) => {
     const options = optionsForCli(name);
-    const installDepsAction = await cli("pnpm", ["install"], options);
-
-    if (!installDepsAction) {
-        exitOnFail();
-    }
 
     const preSelectedDeps = getPreSelectedDeps({
         type,
@@ -103,8 +98,6 @@ export const handleDependencies = async ({
         return;
     }
 
-    // TODO: uninstall deps
-
     const s = spinner();
     s.start(`Installing ${depsText}`);
 
@@ -112,20 +105,34 @@ export const handleDependencies = async ({
         (dep) => !preSelectedDeps.includes(dep)
     );
 
-    if (notInstalledDeps.length === 0) {
-        s.stop(`Installed ${depsText} ✅`);
-        return;
+    if (notInstalledDeps.length > 0) {
+        const installAction = await cli(
+            "pnpm",
+            ["install", ...notInstalledDeps, `${type === "deps" ? "" : "-D"}`],
+            options
+        );
+
+        if (!installAction) {
+            s.stop(`Failed to install ${depsText} ❌`);
+            exitOnFail();
+        }
     }
 
-    const installAction = await cli(
-        "pnpm",
-        ["install", ...notInstalledDeps, `${type === "deps" ? "" : "-D"}`],
-        options
+    const depsToRemove = preSelectedDeps.filter(
+        (dep) => !answers.includes(dep)
     );
 
-    if (!installAction) {
-        s.stop(`Failed to install ${depsText} ❌`);
-        exitOnFail();
+    if (depsToRemove.length > 0) {
+        const removeAction = await cli(
+            "pnpm",
+            ["remove", ...depsToRemove],
+            options
+        );
+
+        if (!removeAction) {
+            s.stop(`Failed to remove ${depsText} ❌`);
+            exitOnFail();
+        }
     }
 
     s.stop(`Installed ${depsText} ✅`);
