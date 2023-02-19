@@ -31,6 +31,7 @@ const DEPS: Dependencies & { common: Dependency } = {
             "minimist",
             "picocolors",
             "prompts",
+            "cleye",
         ],
     },
     lib: {

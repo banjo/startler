@@ -1,36 +1,53 @@
 #!/usr/bin/env node
 
-import minimist from "minimist";
-import { HELP_MESSAGE } from "./constants";
+import { cli, command as cliCommand } from "cleye";
+import { version } from "../package.json";
 import { common } from "./handlers/common";
-import { parseCommand, parseName } from "./parseArgs";
-
-const argv = minimist(process.argv.slice(2));
-const showHelp = argv.h || argv.help || !argv._.length;
 
 console.log(); // Add a newline
 
-if (showHelp) {
-    console.log(HELP_MESSAGE);
-    process.exit(0);
-}
+const name = "<name>";
 
-const command = parseCommand(argv);
-const name = parseName(argv);
-
-async function main() {
-    switch (command) {
-        case "lib":
-            common(command, name);
-            break;
-        case "userscript":
-            // TODO: rename to pkg-name in project
-            common(command, name);
-            break;
-        default:
-            console.error(`Unknown command: ${command}`);
-            process.exit(1);
+const lib = cliCommand(
+    {
+        name: "lib",
+        parameters: [name],
+        help: {
+            description: "Create a new library project",
+            usage: "lib <name>",
+        },
+    },
+    async (argv) => {
+        await common("lib", argv._.name);
     }
-}
+);
 
-main().catch(console.error);
+const userscript = cliCommand(
+    {
+        name: "userscript",
+        parameters: [name],
+        help: {
+            description: "Create a new userscript project",
+            usage: "userscript <name>",
+        },
+    },
+    async (argv) => {
+        await common("userscript", argv._.name);
+    }
+);
+
+cli(
+    {
+        name: "clistart",
+        version,
+        commands: [lib, userscript],
+        help: {
+            description: "Kickstart a new project easily with good defaults ✅",
+        },
+    },
+    async (argv) => {
+        if (argv._.length === 0) {
+            argv.showHelp();
+        }
+    }
+);
