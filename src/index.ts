@@ -17,9 +17,7 @@ const lib = cliCommand(
             usage: "lib <name>",
         },
     },
-    async (argv) => {
-        await common("lib", argv._.name);
-    }
+    async (argv) => await common("lib", argv._.name)
 );
 
 const userscript = cliCommand(
@@ -31,9 +29,7 @@ const userscript = cliCommand(
             usage: "userscript <name>",
         },
     },
-    async (argv) => {
-        await common("userscript", argv._.name);
-    }
+    async (argv) => await common("userscript", argv._.name)
 );
 
 cli(
@@ -45,9 +41,5 @@ cli(
             description: "Kickstart a new project easily with good defaults ✅",
         },
     },
-    async (argv) => {
-        if (argv._.length === 0) {
-            argv.showHelp();
-        }
-    }
+    async (argv) => argv.showHelp()
 );
