@@ -41,7 +41,7 @@ export const DEPS: Dependencies & { common: Dependency } = {
         ],
     },
     lib: {
-        deps: [],
+        deps: ["globby"],
         devDeps: [],
     },
 };
