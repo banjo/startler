@@ -1,4 +1,4 @@
-import { isEqual } from "@banjoanton/utils";
+import { isEmptyArray, isEqual } from "@banjoanton/utils";
 import { multiselect, spinner } from "@clack/prompts";
 import { DEPS } from "./config";
 import { Command, DependencyType } from "./types";
@@ -39,23 +39,27 @@ export const handleDependencies = async ({
     const options = optionsForCli(name);
     const isDependencies = type === "deps";
     const dependencies = isDependencies
-        ? packageJson.dependencies
-        : packageJson.devDependencies;
+        ? packageJson?.dependencies
+        : packageJson?.devDependencies;
     const depsText = isDependencies ? "dependencies" : "devDependencies";
 
     const preSelectedDeps = getPreSelectedDeps({
         type,
         command,
-        depsFromPackage: Object.keys(dependencies),
+        depsFromPackage: Object.keys(dependencies ?? []),
     });
 
     const possibleDeps = getPossibleDeps(command, type);
+
+    if (isEmptyArray(possibleDeps) && !dependencies) {
+        return;
+    }
 
     const answers = (await multiselect({
         message: `Which ${depsText} do you want to install?`,
         required: false,
         options: possibleDeps.map((d) => ({ value: d, label: d })),
-        initialValue: JSON.parse(JSON.stringify(preSelectedDeps)), // TODO: update deep clone
+        initialValue: [...preSelectedDeps],
     })) as string[];
 
     if (isEqual(possibleDeps, answers)) {

@@ -1,7 +1,8 @@
 import { replacer } from "@banjoanton/replacer";
-import { intro, outro, spinner } from "@clack/prompts";
-import { existsSync } from "fs";
-import { PREVIOUS_NAME, SOURCES } from "../config";
+import { isNil } from "@banjoanton/utils";
+import { intro, outro, select, spinner } from "@clack/prompts";
+import { existsSync, writeFileSync } from "fs";
+import { getNodeVersions, PREVIOUS_NAME, SOURCES } from "../config";
 import { handleDependencies } from "../deps";
 import { Command } from "../types";
 import { cli, exitOnFail, optionsForCli } from "../utils";
@@ -63,6 +64,29 @@ export const common = async (command: Command, name: string) => {
     if (!packageJson) {
         s.stop("Failed to read package.json ❌");
         exitOnFail();
+    }
+
+    let versions = await getNodeVersions();
+
+    if (isNil(versions)) {
+        console.log("Failed to fetch node versions");
+        exitOnFail();
+        return;
+    }
+
+    const nodeVersion = await select({
+        message: "Which node version do you want to use?",
+        options: versions.slice(0, 4).map((v) => ({
+            value: v.latest,
+            label: `${v.latest}${v.lts ? " - LTS" : ""}`,
+        })),
+    });
+
+    if (nodeVersion) {
+        const tag = `v${String(nodeVersion)}`;
+        writeFileSync(`./${name}/.nvmrc`, tag);
+        s.start();
+        s.stop(`Updated node version to ${tag} ✅`);
     }
 
     s.start("Preparing for dependencies");
