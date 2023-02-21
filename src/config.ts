@@ -21,6 +21,7 @@ export const DEPS: Dependencies & { common: Dependency } = {
             "pnpm",
             "prettier",
             "type-fest",
+            "@total-typescript/ts-reset",
         ],
     },
     userscript: {
