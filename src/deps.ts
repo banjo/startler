@@ -1,5 +1,5 @@
 import { isEmptyArray, isEqual } from "@banjoanton/utils";
-import { multiselect, spinner } from "@clack/prompts";
+import { isCancel, multiselect, outro, spinner } from "@clack/prompts";
 import { DEPS } from "./config";
 import { Command, DependencyType } from "./types";
 import { cli, exitOnFail, optionsForCli } from "./utils";
@@ -61,6 +61,11 @@ export const handleDependencies = async ({
         options: possibleDeps.map((d) => ({ value: d, label: d })),
         initialValue: [...preSelectedDeps],
     })) as string[];
+
+    if (isCancel(answers)) {
+        outro(`Cancelled ${depsText} installation ❌`);
+        process.exit(0);
+    }
 
     if (isEqual(possibleDeps, answers)) {
         return;

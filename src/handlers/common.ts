@@ -1,6 +1,6 @@
 import { replacer } from "@banjoanton/replacer";
 import { isNil } from "@banjoanton/utils";
-import { intro, outro, select, spinner } from "@clack/prompts";
+import { intro, isCancel, outro, select, spinner } from "@clack/prompts";
 import { existsSync, writeFileSync } from "fs";
 import { getNodeVersions, PREVIOUS_NAME, SOURCES } from "../config";
 import { handleDependencies } from "../deps";
@@ -66,6 +66,8 @@ export const common = async (command: Command, name: string) => {
         exitOnFail();
     }
 
+    s.start("Fetching node versions");
+
     let versions = await getNodeVersions();
 
     if (isNil(versions)) {
@@ -74,6 +76,8 @@ export const common = async (command: Command, name: string) => {
         return;
     }
 
+    s.stop("Fetched node versions ✅");
+
     const nodeVersion = await select({
         message: "Which node version do you want to use?",
         options: versions.slice(0, 4).map((v) => ({
@@ -81,6 +85,11 @@ export const common = async (command: Command, name: string) => {
             label: `${v.latest}${v.lts ? " - LTS" : ""}`,
         })),
     });
+
+    if (isCancel(nodeVersion)) {
+        outro("Cancelled ✅");
+        process.exit(0);
+    }
 
     if (nodeVersion) {
         const tag = `v${String(nodeVersion)}`;
