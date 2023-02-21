@@ -1,5 +1,8 @@
 import { outro } from "@clack/prompts";
+import { command as cliCommand } from "cleye";
 import { execa, Options } from "execa";
+import { common } from "./handlers/common";
+import { Command } from "./types";
 
 export const cli = async (
     command: string,
@@ -32,6 +35,22 @@ export const cli = async (
 
         return null;
     }
+};
+
+export const createCommand = (command: Command) => {
+    const name = "<name>";
+
+    return cliCommand(
+        {
+            name: command,
+            parameters: [name],
+            help: {
+                description: `Create a new ${command} project`,
+                usage: `${command} ${name}`,
+            },
+        },
+        async (argv) => await common(command, argv._.name)
+    );
 };
 
 export const optionsForCli = (name: string) => ({
