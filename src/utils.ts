@@ -1,5 +1,5 @@
 import { outro } from "@clack/prompts";
-import { command as cliCommand } from "cleye";
+import { command as cliCommand, type Command as CommandType } from "cleye";
 import { execa, Options } from "execa";
 import { common } from "./handlers/common";
 import { Command } from "./types";
@@ -37,7 +37,7 @@ export const cli = async (
     }
 };
 
-export const createCommand = (command: Command) => {
+export const createCommand = (command: Command): CommandType => {
     const name = "<name>";
 
     return cliCommand(
