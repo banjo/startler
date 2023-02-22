@@ -11,10 +11,9 @@ export const SOURCES: Record<Command, string> = {
 
 export const DEPS: Dependencies & { common: Dependency } = {
     common: {
-        deps: [],
+        deps: ["@banjoanton/replacer"],
         devDeps: [
             "@antfu/ni",
-            "@banjoanton/replacer",
             "@banjoanton/utils",
             "bumpp",
             "eslint",
@@ -29,15 +28,12 @@ export const DEPS: Dependencies & { common: Dependency } = {
         devDeps: [],
     },
     cli: {
-        deps: [],
+        deps: ["execa", "picocolors", "prompts", "type-flag"],
         devDeps: [
             "@clack/prompts",
             "@types/minimist",
             "@types/prompts",
-            "execa",
             "minimist",
-            "picocolors",
-            "prompts",
             "cleye",
         ],
     },
