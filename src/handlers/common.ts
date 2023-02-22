@@ -2,10 +2,14 @@ import { replacer } from "@banjoanton/replacer";
 import { isNil } from "@banjoanton/utils";
 import { intro, isCancel, outro, select, spinner } from "@clack/prompts";
 import { existsSync, writeFileSync } from "fs";
+import { createRequire } from "module"; // Bring in the ability to create the 'require' method
 import { getNodeVersions, PREVIOUS_NAME, SOURCES } from "../config";
 import { handleDependencies } from "../deps";
 import { Command } from "../types";
 import { cli, exitOnFail, optionsForCli } from "../utils";
+
+// @ts-ignore
+const require = createRequire(import.meta.url); // construct the require method
 
 export const common = async (command: Command, name: string) => {
     const options = optionsForCli(name);
@@ -60,9 +64,7 @@ export const common = async (command: Command, name: string) => {
     s.stop("Updated names ✅");
 
     const currentPath = process.cwd();
-    const packageJson = await import(`${currentPath}/${name}/package.json`, {
-        assert: { type: "json" },
-    });
+    const packageJson = require(`${currentPath}/${name}/package.json`);
 
     if (!packageJson) {
         s.stop("Failed to read package.json ❌");
