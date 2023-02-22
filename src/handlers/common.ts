@@ -60,7 +60,9 @@ export const common = async (command: Command, name: string) => {
     s.stop("Updated names ✅");
 
     const currentPath = process.cwd();
-    const packageJson = await import(`${currentPath}/${name}/package.json`);
+    const packageJson = await import(`${currentPath}/${name}/package.json`, {
+        assert: { type: "json" },
+    });
 
     if (!packageJson) {
         s.stop("Failed to read package.json ❌");
