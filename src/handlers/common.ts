@@ -3,16 +3,18 @@ import { isNil } from "@banjoanton/utils";
 import { intro, isCancel, outro, select, spinner } from "@clack/prompts";
 import { existsSync, writeFileSync } from "fs";
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
+import { cliCreator } from "../cliCreator";
 import { getNodeVersions, PREVIOUS_NAME, SOURCES } from "../config";
 import { handleDependencies } from "../deps";
 import { Command } from "../types";
-import { cli, exitOnFail, optionsForCli } from "../utils";
+import { cli, exitOnFail } from "../utils";
 
 // @ts-ignore
 const require = createRequire(import.meta.url); // construct the require method
 
 export const common = async (command: Command, name: string) => {
-    const options = optionsForCli(name);
+    const cliConfig = cliCreator(command, name);
+    const { options } = cliConfig;
 
     intro(`Creating a new ${command} project named ${name}`);
 
@@ -63,14 +65,6 @@ export const common = async (command: Command, name: string) => {
 
     s.stop("Updated names ✅");
 
-    const currentPath = process.cwd();
-    const packageJson = require(`${currentPath}/${name}/package.json`);
-
-    if (!packageJson) {
-        s.stop("Failed to read package.json ❌");
-        exitOnFail();
-    }
-
     s.start("Fetching node versions");
 
     let versions = await getNodeVersions();
@@ -114,12 +108,10 @@ export const common = async (command: Command, name: string) => {
 
     s.stop("Prepared for dependencies ✅");
 
-    await handleDependencies({ command, type: "deps", packageJson, name });
+    await handleDependencies({ type: "deps", cliConfig });
     await handleDependencies({
-        command,
         type: "devDeps",
-        packageJson,
-        name,
+        cliConfig,
     });
 
     s.start("Updating to latest versions");
@@ -132,8 +124,6 @@ export const common = async (command: Command, name: string) => {
     }
 
     s.stop(`Updated dependencies to latest versions ✅`);
-
-    const latestPackageJson = require(`${currentPath}/${name}/package.json`);
 
     const useHusky = await select({
         message: "Do you want to use husky?",
@@ -163,13 +153,13 @@ export const common = async (command: Command, name: string) => {
             s.stop(`Failed to remove husky ❌`);
             exitOnFail();
         }
-        delete latestPackageJson.scripts.prepare;
-        delete latestPackageJson.devDependencies.husky;
 
-        writeFileSync(
-            `./${name}/package.json`,
-            JSON.stringify(latestPackageJson, null, 4)
-        );
+        const latestPackageJson = cliConfig.getPackage();
+
+        delete latestPackageJson?.scripts?.prepare;
+        delete latestPackageJson?.devDependencies?.husky;
+
+        cliConfig.setPackage(latestPackageJson);
     }
 
     s.stop(`Updated husky ✅`);

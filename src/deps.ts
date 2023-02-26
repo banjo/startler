@@ -1,8 +1,9 @@
 import { isEmptyArray, isEqual } from "@banjoanton/utils";
 import { isCancel, multiselect, outro, spinner } from "@clack/prompts";
+import { CliConfig } from "./cliCreator";
 import { DEPS } from "./config";
 import { Command, DependencyType } from "./types";
-import { cli, exitOnFail, optionsForCli } from "./utils";
+import { cli, exitOnFail } from "./utils";
 
 const getDeps = (command: Command, type: DependencyType) => {
     return [...DEPS[command][type], ...DEPS.common[type]];
@@ -26,26 +27,20 @@ const getPossibleDeps = (command: Command, type: DependencyType) =>
     getDeps(command, type);
 
 export const handleDependencies = async ({
-    command,
     type,
-    packageJson,
-    name,
+    cliConfig,
 }: {
-    command: Command;
     type: DependencyType;
-    packageJson: any;
-    name: string;
+    cliConfig: CliConfig;
 }) => {
-    const options = optionsForCli(name);
     const isDependencies = type === "deps";
-    const dependencies = isDependencies
-        ? packageJson?.dependencies
-        : packageJson?.devDependencies;
+    const dependencies = cliConfig.getDependencies(type);
     const depsText = isDependencies ? "dependencies" : "devDependencies";
+    const { command, options } = cliConfig;
 
     const preSelectedDeps = getPreSelectedDeps({
         type,
-        command,
+        command: cliConfig.command,
         depsFromPackage: Object.keys(dependencies ?? []),
     });
 
