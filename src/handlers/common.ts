@@ -133,5 +133,46 @@ export const common = async (command: Command, name: string) => {
 
     s.stop(`Updated dependencies to latest versions ✅`);
 
+    const latestPackageJson = require(`${currentPath}/${name}/package.json`);
+
+    const useHusky = await select({
+        message: "Do you want to use husky?",
+        options: [
+            { value: true, label: "Yes" },
+            { value: false, label: "No" },
+        ],
+    });
+
+    s.start("Updating husky");
+
+    if (useHusky) {
+        const huskyAction = await cli("pnpm", ["dlx", "husky-init"], options);
+
+        if (!huskyAction) {
+            s.stop(`Failed to add husky ❌`);
+            exitOnFail();
+        }
+    } else {
+        const removeHuskyFilesAction = await cli(
+            "rm",
+            ["-rf", ".husky"],
+            options
+        );
+
+        if (!removeHuskyFilesAction) {
+            s.stop(`Failed to remove husky ❌`);
+            exitOnFail();
+        }
+        delete latestPackageJson.scripts.prepare;
+        delete latestPackageJson.devDependencies.husky;
+
+        writeFileSync(
+            `./${name}/package.json`,
+            JSON.stringify(latestPackageJson, null, 4)
+        );
+    }
+
+    s.stop(`Updated husky ✅`);
+
     outro(`Created a new ${command} project named ${name} ✅`);
 };
