@@ -2,15 +2,12 @@ import { replacer } from "@banjoanton/replacer";
 import { isNil } from "@banjoanton/utils";
 import { intro, isCancel, outro, select, spinner } from "@clack/prompts";
 import { existsSync, writeFileSync } from "fs";
-import { createRequire } from "module"; // Bring in the ability to create the 'require' method
+import { husky } from "../applications/husky";
 import { cliCreator } from "../cliCreator";
 import { getNodeVersions, PREVIOUS_NAME, SOURCES } from "../config";
 import { handleDependencies } from "../deps";
 import { Command } from "../types";
 import { cli, exitOnFail } from "../utils";
-
-// @ts-ignore
-const require = createRequire(import.meta.url); // construct the require method
 
 export const common = async (command: Command, name: string) => {
     const cliConfig = cliCreator(command, name);
@@ -136,30 +133,19 @@ export const common = async (command: Command, name: string) => {
     s.start("Updating husky");
 
     if (useHusky) {
-        const huskyAction = await cli("pnpm", ["dlx", "husky-init"], options);
+        const huskyAction = await husky.install(cliConfig);
 
         if (!huskyAction) {
             s.stop(`Failed to add husky ❌`);
             exitOnFail();
         }
     } else {
-        const removeHuskyFilesAction = await cli(
-            "rm",
-            ["-rf", ".husky"],
-            options
-        );
+        const removeHuskyAction = await husky.uninstall(cliConfig);
 
-        if (!removeHuskyFilesAction) {
+        if (!removeHuskyAction) {
             s.stop(`Failed to remove husky ❌`);
             exitOnFail();
         }
-
-        const latestPackageJson = cliConfig.getPackage();
-
-        delete latestPackageJson?.scripts?.prepare;
-        delete latestPackageJson?.devDependencies?.husky;
-
-        cliConfig.setPackage(latestPackageJson);
     }
 
     s.stop(`Updated husky ✅`);
