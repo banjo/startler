@@ -1,17 +1,15 @@
-import { replacer } from "@banjoanton/replacer";
-import { isNil } from "@banjoanton/utils";
-import { intro, isCancel, outro, select, spinner } from "@clack/prompts";
-import { existsSync, writeFileSync } from "fs";
-import { husky } from "../applications/husky";
+import { intro, outro, spinner } from "@clack/prompts";
+import { existsSync } from "fs";
+import { Applications } from "../actions/applications";
+import { Files } from "../actions/files";
+import { Git } from "../actions/git";
+import { Npm } from "../actions/npm";
 import { cliCreator } from "../cliCreator";
-import { getNodeVersions, PREVIOUS_NAME, SOURCES } from "../config";
-import { handleDependencies } from "../deps";
+import { selectDependencies } from "../deps";
 import { Command } from "../types";
-import { cli, exitOnFail } from "../utils";
 
 export const common = async (command: Command, name: string) => {
     const cliConfig = cliCreator(command, name);
-    const { options } = cliConfig;
 
     intro(`Creating a new ${command} project named ${name}`);
 
@@ -21,134 +19,22 @@ export const common = async (command: Command, name: string) => {
     }
 
     const s = spinner();
-    s.start("Fetching template from Github");
-
-    const source = SOURCES[command];
-    const cloneAction = await cli("git", ["clone", source, name]);
-
-    if (!cloneAction) {
-        s.stop("Failed to fetch template from Github ❌");
-        exitOnFail();
-    }
-
-    s.stop("Fetched template from Github ✅");
-
-    s.start("Initializing git");
-
-    const removeAction = await cli("rm", ["-rf", `.git`], options);
-
-    if (!removeAction) {
-        s.stop("Failed to remove .git directory ❌");
-        exitOnFail();
-    }
-
-    const initAction = await cli("git", ["init"], options);
-
-    if (!initAction) {
-        s.stop("Failed to initialize git ❌");
-        exitOnFail();
-    }
-
-    s.stop("Initialized git ✅");
-
-    s.start("Updating names");
-
-    const { handleFiles, commit } = await replacer([`./${name}/**/*`]);
-
-    handleFiles(({ replaceAll }) => {
-        replaceAll(PREVIOUS_NAME, name);
-    });
-    commit();
-
-    s.stop("Updated names ✅");
-
-    s.start("Fetching node versions");
-
-    let versions = await getNodeVersions();
-
-    if (isNil(versions)) {
-        console.log("Failed to fetch node versions");
-        exitOnFail();
-        return;
-    }
-
-    s.stop("Fetched node versions ✅");
-
-    const nodeVersion = await select({
-        message: "Which node version do you want to use?",
-        options: versions.slice(0, 4).map((v) => ({
-            value: v.latest,
-            label: `${v.latest}${v.lts ? " - LTS" : ""}`,
-        })),
-    });
-
-    if (isCancel(nodeVersion)) {
-        outro("Cancelled ✅");
-        process.exit(0);
-    }
-
-    if (nodeVersion) {
-        const tag = `v${String(nodeVersion)}`;
-        writeFileSync(`./${name}/.nvmrc`, tag);
-        s.start();
-        s.stop(`Updated node version to ${tag} ✅`);
-    }
-
-    s.start("Preparing for dependencies");
+    await Git.clone(cliConfig);
+    await Git.init(cliConfig);
+    await Files.replace(cliConfig);
+    await Npm.selectNodeVersion(cliConfig);
 
     // for husky
-    const installDepsAction = await cli("pnpm", ["install"], options);
+    await Npm.install(cliConfig);
 
-    if (!installDepsAction) {
-        exitOnFail();
-    }
-
-    s.stop("Prepared for dependencies ✅");
-
-    await handleDependencies({ type: "deps", cliConfig });
-    await handleDependencies({
+    await selectDependencies({ type: "deps", cliConfig });
+    await selectDependencies({
         type: "devDeps",
         cliConfig,
     });
 
-    s.start("Updating to latest versions");
-
-    const updateAction = await cli("pnpm", ["up", "--latest"], options);
-
-    if (!updateAction) {
-        s.stop(`Failed to update dependencies ❌`);
-        exitOnFail();
-    }
-
-    s.stop(`Updated dependencies to latest versions ✅`);
-
-    const useHusky = await select({
-        message: "Do you want to use husky?",
-        options: [
-            { value: true, label: "Yes" },
-            { value: false, label: "No" },
-        ],
-    });
-
-    s.start("Updating husky");
-
-    if (useHusky) {
-        const huskyAction = await husky.install(cliConfig);
-
-        if (!huskyAction) {
-            s.stop(`Failed to add husky ❌`);
-            exitOnFail();
-        }
-    } else {
-        const removeHuskyAction = await husky.uninstall(cliConfig);
-
-        if (!removeHuskyAction) {
-            s.stop(`Failed to remove husky ❌`);
-            exitOnFail();
-        }
-    }
-
-    s.stop(`Updated husky ✅`);
+    await Npm.update(cliConfig);
+    await Applications.husky(cliConfig);
 
     outro(`Created a new ${command} project named ${name} ✅`);
 };
