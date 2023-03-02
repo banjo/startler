@@ -5,8 +5,8 @@ import { Files } from "../actions/files";
 import { Git } from "../actions/git";
 import { Npm } from "../actions/npm";
 import { cliCreator } from "../cliCreator";
-import { selectDependencies } from "../deps";
-import { Command } from "../types";
+import { Command } from "../misc/types";
+import { selectDependencies } from "../services/deps";
 
 export const common = async (command: Command, name: string) => {
     const cliConfig = cliCreator(command, name);

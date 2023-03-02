@@ -1,7 +1,7 @@
 import fs from "fs";
 import { PackageJson } from "type-fest";
-import { Command, DependencyType } from "./types";
-import { optionsForCli } from "./utils";
+import { Command, DependencyType } from "./misc/types";
+import { optionsForCli } from "./misc/utils";
 
 export const cliCreator = (command: Command, name: string) => {
     const options = optionsForCli(name);

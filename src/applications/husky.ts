@@ -1,5 +1,5 @@
 import { CliConfig } from "../cliCreator";
-import { cli } from "../utils";
+import { cli } from "../misc/utils";
 
 const install = async (cliConfig: CliConfig) => {
     const huskyAction = await cli(

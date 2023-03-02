@@ -1,7 +1,8 @@
 import { outro } from "@clack/prompts";
+import allNodeVersions from "all-node-versions";
 import { command as cliCommand, type Command as CommandType } from "cleye";
 import { execa, Options } from "execa";
-import { common } from "./handlers/common";
+import { common } from "../handlers/common";
 import { Command } from "./types";
 
 export const cli = async (
@@ -65,4 +66,11 @@ export const exitOnFail = (error?: string) => {
         outro("Failed to create project 😢");
         process.exit(1);
     }
+};
+
+export const getNodeVersions = async () => {
+    const { majors } = await allNodeVersions();
+    if (!majors) return null;
+
+    return majors;
 };

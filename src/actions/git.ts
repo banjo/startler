@@ -1,7 +1,7 @@
 import { spinner } from "@clack/prompts";
 import { CliConfig } from "../cliCreator";
-import { SOURCES } from "../config";
-import { cli, exitOnFail } from "../utils";
+import { SOURCES } from "../misc/config";
+import { cli, exitOnFail } from "../misc/utils";
 
 const s = spinner();
 

@@ -1,4 +1,3 @@
-import allNodeVersions from "all-node-versions";
 import { Command, Dependencies, Dependency } from "./types";
 
 export const PREVIOUS_NAME = "pkg-name";
@@ -41,11 +40,4 @@ export const DEPS: Dependencies & { common: Dependency } = {
         deps: ["globby"],
         devDeps: [],
     },
-};
-
-export const getNodeVersions = async () => {
-    const { majors } = await allNodeVersions();
-    if (!majors) return null;
-
-    return majors;
 };

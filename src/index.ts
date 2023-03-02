@@ -2,7 +2,7 @@
 
 import { cli } from "cleye";
 import { version } from "../package.json";
-import { createCommand } from "./utils";
+import { createCommand } from "./misc/utils";
 
 console.log(); // Add a newline
 

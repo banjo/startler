@@ -2,8 +2,7 @@ import { isNil } from "@banjoanton/utils";
 import { isCancel, outro, select, spinner } from "@clack/prompts";
 import { writeFileSync } from "fs";
 import { CliConfig } from "../cliCreator";
-import { getNodeVersions } from "../config";
-import { cli, exitOnFail } from "../utils";
+import { cli, exitOnFail, getNodeVersions } from "../misc/utils";
 
 const s = spinner();
 

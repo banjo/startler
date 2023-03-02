@@ -1,7 +1,7 @@
 import { select, spinner } from "@clack/prompts";
 import { husky as huskyApp } from "../applications/husky";
 import { CliConfig } from "../cliCreator";
-import { exitOnFail } from "../utils";
+import { exitOnFail } from "../misc/utils";
 
 const s = spinner();
 

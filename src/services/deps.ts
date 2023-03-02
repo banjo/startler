@@ -1,9 +1,9 @@
 import { isEmptyArray, isEqual } from "@banjoanton/utils";
 import { isCancel, multiselect, outro, spinner } from "@clack/prompts";
-import { CliConfig } from "./cliCreator";
-import { DEPS } from "./config";
-import { Command, DependencyType } from "./types";
-import { cli, exitOnFail } from "./utils";
+import { CliConfig } from "../cliCreator";
+import { DEPS } from "../misc/config";
+import { Command, DependencyType } from "../misc/types";
+import { cli, exitOnFail } from "../misc/utils";
 
 const getDeps = (command: Command, type: DependencyType) => {
     return [...DEPS[command][type], ...DEPS.common[type]];

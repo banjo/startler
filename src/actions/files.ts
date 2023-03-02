@@ -1,7 +1,7 @@
 import { replacer } from "@banjoanton/replacer";
 import { spinner } from "@clack/prompts";
 import { CliConfig } from "../cliCreator";
-import { PREVIOUS_NAME } from "../config";
+import { PREVIOUS_NAME } from "../misc/config";
 
 const s = spinner();
 
