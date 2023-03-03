@@ -15,6 +15,7 @@ export const DEPS: Dependencies & { common: Dependency } = {
         devDeps: [
             "@antfu/ni",
             "@banjoanton/utils",
+            "case-police",
             "bumpp",
             "eslint",
             "pnpm",
