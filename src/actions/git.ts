@@ -8,14 +8,19 @@ const s = spinner();
 const init = async (config: CliConfig) => {
     s.start("Initializing git");
 
-    const removeAction = await cli("rm", ["-rf", `.git`], config.options);
+    // use temporary options to fix always fix git in the main folder
+    const options = {
+        cwd: config.name,
+    };
+
+    const removeAction = await cli("rm", ["-rf", `.git`], options);
 
     if (!removeAction) {
         s.stop("Failed to remove .git directory ❌");
         exitOnFail();
     }
 
-    const initAction = await cli("git", ["init"], config.options);
+    const initAction = await cli("git", ["init"], options);
 
     if (!initAction) {
         s.stop("Failed to initialize git ❌");

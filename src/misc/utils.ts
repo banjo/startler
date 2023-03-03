@@ -3,12 +3,19 @@ import allNodeVersions from "all-node-versions";
 import { command as cliCommand, type Command as CommandType } from "cleye";
 import { execa, Options } from "execa";
 import { common } from "../handlers/common";
-import { Command } from "./types";
+import { Command, Handler } from "./types";
+
+type ExtraOptions = {
+    /**
+     * Whether to log the error to the console.
+     */
+    logError?: boolean;
+};
 
 export const cli = async (
     command: string,
     args: string[],
-    options?: Options,
+    options?: Options & { logError?: boolean },
     errorHandler?: (error: Error) => void
 ) => {
     try {
@@ -31,14 +38,19 @@ export const cli = async (
         if (errorHandler) {
             errorHandler(e);
         } else {
-            console.error(error);
+            if (options?.logError) {
+                console.error(error);
+            }
         }
 
         return null;
     }
 };
 
-export const createCommand = (command: Command): CommandType => {
+export const createCommand = (
+    command: Command,
+    handler?: Handler
+): CommandType => {
     const name = "<name>";
 
     return cliCommand(
@@ -50,13 +62,24 @@ export const createCommand = (command: Command): CommandType => {
                 usage: `${command} ${name}`,
             },
         },
-        async (argv) => await common(command, argv._.name)
+        async (argv) => {
+            if (handler) {
+                await handler(command, argv._.name);
+                return;
+            } else {
+                await common(command, argv._.name);
+            }
+        }
     );
 };
 
-export const optionsForCli = (name: string) => ({
-    cwd: `./${name}`,
-});
+export const optionsForCli = (name: string, command?: Command) => {
+    const cwd = command === "firebase" ? `./${name}/functions` : `./${name}`;
+
+    return {
+        cwd,
+    };
+};
 
 export const exitOnFail = (error?: string) => {
     if (error) {

@@ -4,17 +4,21 @@ import { Command, DependencyType } from "./misc/types";
 import { optionsForCli } from "./misc/utils";
 
 export const cliCreator = (command: Command, name: string) => {
-    const options = optionsForCli(name);
+    const options = optionsForCli(name, command);
+    const packageDirectory = options.cwd;
 
     const getPackage = (): PackageJson => {
-        const pkgString = fs.readFileSync(`./${name}/package.json`, "utf-8");
+        const pkgString = fs.readFileSync(
+            `${packageDirectory}/package.json`,
+            "utf-8"
+        );
         const pkg: PackageJson = JSON.parse(pkgString);
         return pkg;
     };
 
     const setPackage = (pkg: PackageJson) => {
         fs.writeFileSync(
-            `./${name}/package.json`,
+            `${packageDirectory}/package.json`,
             JSON.stringify(pkg, null, 4)
         );
     };
@@ -53,6 +57,7 @@ export const cliCreator = (command: Command, name: string) => {
         options,
         command,
         name,
+        packageDirectory,
     };
 };
 

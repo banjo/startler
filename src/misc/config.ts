@@ -6,6 +6,7 @@ export const SOURCES: Record<Command, string> = {
     lib: "git@github.com:banjo/lib-starter.git",
     userscript: "git@github.com:banjo/userscript-starter.git",
     cli: "git@github.com:banjo/cli-starter.git",
+    firebase: "git@github.com:banjo/firebase-starter.git",
 };
 
 export const DEPS: Dependencies & { common: Dependency } = {
@@ -38,6 +39,10 @@ export const DEPS: Dependencies & { common: Dependency } = {
     },
     lib: {
         deps: ["globby"],
+        devDeps: [],
+    },
+    firebase: {
+        deps: ["axios"],
         devDeps: [],
     },
 };

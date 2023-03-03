@@ -6,7 +6,7 @@ import { cli, exitOnFail, getNodeVersions } from "../misc/utils";
 
 const s = spinner();
 
-const selectNodeVersion = async (cliConfig: CliConfig) => {
+const selectNodeVersion = async (cliConfig: CliConfig, onlyLts = false) => {
     s.start("Fetching node versions");
 
     let versions = await getNodeVersions();
@@ -19,12 +19,16 @@ const selectNodeVersion = async (cliConfig: CliConfig) => {
 
     s.stop("Fetched node versions ✅");
 
+    const ltsVersions = versions.filter((v) => v.lts);
+    const selectedVersions = onlyLts ? ltsVersions : versions;
+    const options = selectedVersions.slice(0, 4).map((v) => ({
+        value: v.latest,
+        label: `${v.latest}${v.lts ? " - LTS" : ""}`,
+    }));
+
     const nodeVersion = await select({
         message: "Which node version do you want to use?",
-        options: versions.slice(0, 4).map((v) => ({
-            value: v.latest,
-            label: `${v.latest}${v.lts ? " - LTS" : ""}`,
-        })),
+        options,
     });
 
     if (isCancel(nodeVersion)) {
@@ -33,10 +37,18 @@ const selectNodeVersion = async (cliConfig: CliConfig) => {
     }
 
     if (nodeVersion) {
-        const tag = `v${String(nodeVersion)}`;
-        writeFileSync(`./${cliConfig.name}/.nvmrc`, tag);
+        const tag = nodeVersion.split(".")[0];
+        const tagString = `v${String(nodeVersion)}`;
+        writeFileSync(`./${cliConfig.name}/.nvmrc`, tagString);
+
+        const pkg = cliConfig.getPackage();
+        if (pkg?.engines?.node) {
+            pkg.engines.node = tag;
+        }
+        cliConfig.setPackage(pkg);
+
         s.start();
-        s.stop(`Updated node version to ${tag} ✅`);
+        s.stop(`Updated node version to ${tagString} ✅`);
     }
 };
 
