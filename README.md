@@ -51,3 +51,7 @@ Easily get going with a new userscript. All things preconfigured. Uses Vite and 
 ### cli
 
 Much like the `lib` template but more tweaked towards having good defaults for a CLI application. 
+
+### firebase
+
+Simple starter with Firebase functions, updated to use `tsup` and some other things to improve DX.
