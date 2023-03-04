@@ -48,7 +48,7 @@ export const createCommand = (command: Command, handler?: Handler): CommandType 
                 usage: `${command} ${name}`,
             },
         },
-        async (argv) => {
+        async argv => {
             if (handler) {
                 await handler(command, argv._.name);
                 return;

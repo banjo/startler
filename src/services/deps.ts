@@ -19,7 +19,7 @@ const getPreSelectedDeps = ({
     type: DependencyType;
 }) => {
     let deps = getDeps(command, type);
-    const preSelectedDeps = depsFromPackage.filter((dep) => deps.includes(dep));
+    const preSelectedDeps = depsFromPackage.filter(dep => deps.includes(dep));
     return preSelectedDeps;
 };
 
@@ -46,7 +46,7 @@ export const selectDependencies = async ({ type, cliConfig }: { type: Dependency
     const answers = (await multiselect({
         message: `Which ${depsText} do you want to install?`,
         required: false,
-        options: possibleDeps.map((d) => ({ value: d, label: d })),
+        options: possibleDeps.map(d => ({ value: d, label: d })),
         initialValue: [...preSelectedDeps],
     })) as string[];
 
@@ -62,7 +62,7 @@ export const selectDependencies = async ({ type, cliConfig }: { type: Dependency
     const s = spinner();
     s.start(`Installing ${depsText}`);
 
-    const notInstalledDeps = answers.filter((dep) => !preSelectedDeps.includes(dep));
+    const notInstalledDeps = answers.filter(dep => !preSelectedDeps.includes(dep));
 
     if (notInstalledDeps.length > 0) {
         const installAction = await cli(
@@ -77,7 +77,7 @@ export const selectDependencies = async ({ type, cliConfig }: { type: Dependency
         }
     }
 
-    const depsToRemove = preSelectedDeps.filter((dep) => !answers.includes(dep));
+    const depsToRemove = preSelectedDeps.filter(dep => !answers.includes(dep));
 
     if (depsToRemove.length > 0) {
         const removeAction = await cli("pnpm", ["remove", ...depsToRemove], options);

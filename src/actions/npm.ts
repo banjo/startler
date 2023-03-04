@@ -19,9 +19,9 @@ const selectNodeVersion = async (cliConfig: CliConfig, onlyLts = false) => {
 
     s.stop("Fetched node versions ✅");
 
-    const ltsVersions = versions.filter((v) => v.lts);
+    const ltsVersions = versions.filter(v => v.lts);
     const selectedVersions = onlyLts ? ltsVersions : versions;
-    const options = selectedVersions.slice(0, 4).map((v) => ({
+    const options = selectedVersions.slice(0, 4).map(v => ({
         value: v.latest,
         label: `${v.latest}${v.lts ? " - LTS" : ""}`,
     }));

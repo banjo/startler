@@ -49,8 +49,8 @@
     },
     "devDependencies": {
         "@antfu/ni": "^0.20.0",
-        "@banjoanton/eslint-config-prettier": "^0.0.7",
-        "@banjoanton/prettier-config": "^0.0.7",
+        "@banjoanton/eslint-config-prettier": "^0.0.8",
+        "@banjoanton/prettier-config": "^0.0.8",
         "@banjoanton/utils": "^0.1.35",
         "@clack/prompts": "^0.4.3",
         "@types/node": "^18.13.0",
