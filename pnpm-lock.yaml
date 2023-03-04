@@ -19,6 +19,7 @@ specifiers:
   eslint-plugin-n: ^15.6.1
   eslint-plugin-promise: ^6.1.1
   eslint-plugin-unicorn: ^46.0.0
+  eslint-plugin-unused-imports: ^2.0.0
   esno: ^0.16.3
   execa: ^7.0.0
   picocolors: ^1.0.0
@@ -53,6 +54,7 @@ devDependencies:
   eslint-plugin-n: 15.6.1_eslint@8.34.0
   eslint-plugin-promise: 6.1.1_eslint@8.34.0
   eslint-plugin-unicorn: 46.0.0_eslint@8.34.0
+  eslint-plugin-unused-imports: 2.0.0_54aj2g6366cv2udekfuziccehe
   esno: 0.16.3
   pnpm: 7.27.0
   prettier: 2.8.4
@@ -1879,6 +1881,26 @@ packages:
       safe-regex: 2.1.1
       semver: 7.3.8
       strip-indent: 3.0.0
+    dev: true
+
+  /eslint-plugin-unused-imports/2.0.0_54aj2g6366cv2udekfuziccehe:
+    resolution: {integrity: sha512-3APeS/tQlTrFa167ThtP0Zm0vctjr4M44HMpeg1P4bK6wItarumq0Ma82xorMKdFsWpphQBlRPzw/pxiVELX1A==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      '@typescript-eslint/eslint-plugin': ^5.0.0
+      eslint: ^8.0.0
+    peerDependenciesMeta:
+      '@typescript-eslint/eslint-plugin':
+        optional: true
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 5.54.0_ahikjgb5ledr2kqpsqofz2bgzy
+      eslint: 8.34.0
+      eslint-rule-composer: 0.3.0
+    dev: true
+
+  /eslint-rule-composer/0.3.0:
+    resolution: {integrity: sha512-bt+Sh8CtDmn2OajxvNO+BX7Wn4CIWMpTRm3MaiKPCQcnnlm0CS2mhui6QaoeQugs+3Kj2ESKEEGJUdVafwhiCg==}
+    engines: {node: '>=4.0.0'}
     dev: true
 
   /eslint-scope/5.1.1:
