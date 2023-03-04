@@ -1,5 +1,6 @@
 import { intro, outro } from "@clack/prompts";
 import { existsSync } from "fs";
+import { Applications } from "../actions/applications";
 import { Files } from "../actions/files";
 import { Firebase } from "../actions/firebase";
 import { Npm } from "../actions/npm";
@@ -34,6 +35,7 @@ export const firebase: Handler = async (command: Command, name: string) => {
 
     await Npm.install(cliConfig);
     await Npm.update(cliConfig);
+    await Applications.gitHooks(cliConfig);
 
     outro(`Created a new ${command} project named ${name} ✅`);
 };

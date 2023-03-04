@@ -23,9 +23,6 @@ export const common: Handler = async (command: Command, name: string) => {
     await Files.replace(cliConfig);
     await Npm.selectNodeVersion(cliConfig);
 
-    // for husky
-    await Npm.install(cliConfig);
-
     await selectDependencies({ type: "deps", cliConfig });
     await selectDependencies({
         type: "devDeps",
@@ -33,7 +30,7 @@ export const common: Handler = async (command: Command, name: string) => {
     });
 
     await Npm.update(cliConfig);
-    await Applications.husky(cliConfig);
+    await Applications.gitHooks(cliConfig);
 
     outro(`Created a new ${command} project named ${name} ✅`);
 };
