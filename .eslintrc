@@ -12,7 +12,6 @@
         "sourceType": "module"
     },
     "rules": {
-        "max-len": [1, { "code": 120 }],
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": ["error"]
     }

@@ -2,8 +2,8 @@ lockfileVersion: 5.4
 
 specifiers:
   '@antfu/ni': ^0.20.0
-  '@banjoanton/eslint-config-prettier': ^0.0.6
-  '@banjoanton/prettier-config': ^0.0.6
+  '@banjoanton/eslint-config-prettier': ^0.0.7
+  '@banjoanton/prettier-config': ^0.0.7
   '@banjoanton/replacer': ^0.0.2
   '@banjoanton/utils': ^0.1.35
   '@clack/prompts': ^0.4.3
@@ -33,8 +33,8 @@ dependencies:
 
 devDependencies:
   '@antfu/ni': 0.20.0
-  '@banjoanton/eslint-config-prettier': 0.0.6_yrlhudqyxg2l7qvwle5bdpmrli
-  '@banjoanton/prettier-config': 0.0.6_prettier@2.8.4
+  '@banjoanton/eslint-config-prettier': 0.0.7_yrlhudqyxg2l7qvwle5bdpmrli
+  '@banjoanton/prettier-config': 0.0.7_prettier@2.8.4
   '@banjoanton/utils': 0.1.35
   '@clack/prompts': 0.4.3
   '@types/node': 18.13.0
@@ -59,21 +59,21 @@ packages:
     hasBin: true
     dev: true
 
-  /@banjoanton/eslint-config-prettier/0.0.6_yrlhudqyxg2l7qvwle5bdpmrli:
-    resolution: {integrity: sha512-OwAGyd8Z8GvHfrgmvFVfDefsyJbj99577NYM8ExuMzz3u2AlhU34cGhRsB7SKpmAhA0AdwSPFrz+hpBs1xRcmA==}
+  /@banjoanton/eslint-config-prettier/0.0.7_yrlhudqyxg2l7qvwle5bdpmrli:
+    resolution: {integrity: sha512-i4g/k5WkVkLA7932tbQ5FhfFQLzG8WnVkP+TIbs2evWNZtyozxy9PgDP9NcesCH3cYPQoGKbcgoPQY3w8KCasA==}
     peerDependencies:
       eslint: ^8.35.0
       prettier: ^2.8.4
     dependencies:
-      '@banjoanton/prettier-config': 0.0.6_prettier@2.8.4
+      '@banjoanton/prettier-config': 0.0.7_prettier@2.8.4
       eslint: 8.34.0
       eslint-config-prettier: 8.6.0_eslint@8.34.0
       eslint-plugin-prettier: 4.2.1_u5wnrdwibbfomslmnramz52buy
       prettier: 2.8.4
     dev: true
 
-  /@banjoanton/prettier-config/0.0.6_prettier@2.8.4:
-    resolution: {integrity: sha512-dKsvYygIp2AeyDOx8dv26qZvL3ujlmUT4WyKDh8tPRXzUXqkhICibIUvrZLibInXy2V2r7BbTuEkr1uO+sPXFQ==}
+  /@banjoanton/prettier-config/0.0.7_prettier@2.8.4:
+    resolution: {integrity: sha512-omtrPD0N/u5BSOSCFa2fr4Gp2Jh40QDCrYP9pgC2epflOTJssGNcj4IEm7Rp37a0YjJdPa0c2s9hcFtDCSFSHg==}
     peerDependencies:
       prettier: ^2.2.1
     dependencies:
