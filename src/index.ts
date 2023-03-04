@@ -23,3 +23,6 @@ cli(
     },
     async (argv) => argv.showHelp()
 );
+
+// break an eslint rule
+const a = 1;
