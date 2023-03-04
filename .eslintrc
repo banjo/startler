@@ -13,7 +13,7 @@
         "plugin:n/recommended"
     ],
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "unicorn", "import", "promise", "unused-imports"],
+    "plugins": ["@typescript-eslint", "unicorn", "import", "promise", "unused-imports", "json"],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
