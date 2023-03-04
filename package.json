@@ -32,7 +32,7 @@
     "scripts": {
         "build": "tsup",
         "dev": "tsup --watch",
-        "lint": "eslint . --ext .ts",
+        "lint": "eslint . --ext .ts --fix",
         "prepublishOnly": "nr build",
         "release": "bumpp && npm publish",
         "start": "esno src/index.ts",

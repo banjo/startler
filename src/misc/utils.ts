@@ -5,13 +5,6 @@ import { execa, Options } from "execa";
 import { common } from "../handlers/common";
 import { Command, Handler } from "./types";
 
-type ExtraOptions = {
-    /**
-     * Whether to log the error to the console.
-     */
-    logError?: boolean;
-};
-
 export const cli = async (
     command: string,
     args: string[],
