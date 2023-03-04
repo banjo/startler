@@ -3,6 +3,7 @@ import allNodeVersions from "all-node-versions";
 import { command as cliCommand, type Command as CommandType } from "cleye";
 import { execa, Options } from "execa";
 import { common } from "../handlers/common";
+import { Runtime } from "./runtime";
 import { Command, Handler } from "./types";
 
 export const cli = async (
@@ -27,7 +28,7 @@ export const cli = async (
         if (errorHandler) {
             errorHandler(e);
         } else {
-            if (options?.logError) {
+            if (options?.logError || Runtime.isDebugging()) {
                 console.error(error);
             }
         }
@@ -47,11 +48,18 @@ export const createCommand = (command: Command, handler?: Handler): CommandType 
                 description: `Create a new ${command} project`,
                 usage: `${command} ${name}`,
             },
+            flags: {
+                debug: {
+                    type: Boolean,
+                    description: "Show debug information",
+                },
+            },
         },
         async argv => {
+            if (argv.flags.debug) Runtime.setDebug(true);
+
             if (handler) {
                 await handler(command, argv._.name);
-                return;
             } else {
                 await common(command, argv._.name);
             }
@@ -69,6 +77,10 @@ export const optionsForCli = (name: string, command?: Command) => {
 
 export const exitOnFail = (error?: string) => {
     if (error) {
+        if (Runtime.isDebugging()) {
+            console.log("Program exited with error:");
+            console.error(error);
+        }
         outro(error);
         process.exit(1);
     } else {
