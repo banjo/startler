@@ -18,8 +18,7 @@ const isCliInstalled = async () => {
 
 const installCli = async () => {
     const install = await confirm({
-        message:
-            "Firebase CLI is not installed. Do you want to install it globally?",
+        message: "Firebase CLI is not installed. Do you want to install it globally?",
     });
 
     if (isCancel(install)) {
@@ -65,11 +64,7 @@ const init = async (cliConfig: CliConfig) => {
 
     s.start("Preparing Firebase");
 
-    const moveAction = await cli("mv", [
-        `${tempName}/.firebaserc`,
-        `${tempName}/firebase.json`,
-        cliConfig.name,
-    ]);
+    const moveAction = await cli("mv", [`${tempName}/.firebaserc`, `${tempName}/firebase.json`, cliConfig.name]);
 
     if (!moveAction) {
         exitOnFail();

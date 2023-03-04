@@ -19,11 +19,7 @@ export const cli = async (
     errorHandler?: (error: Error) => void
 ) => {
     try {
-        const {
-            stdout,
-            stderr,
-            command: stdin,
-        } = await execa(command, args, options);
+        const { stdout, stderr, command: stdin } = await execa(command, args, options);
         return { stdout, stderr, stdin };
     } catch (error) {
         let e: Error;
@@ -47,10 +43,7 @@ export const cli = async (
     }
 };
 
-export const createCommand = (
-    command: Command,
-    handler?: Handler
-): CommandType => {
+export const createCommand = (command: Command, handler?: Handler): CommandType => {
     const name = "<name>";
 
     return cliCommand(

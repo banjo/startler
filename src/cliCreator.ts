@@ -8,25 +8,18 @@ export const cliCreator = (command: Command, name: string) => {
     const packageDirectory = options.cwd;
 
     const getPackage = (): PackageJson => {
-        const pkgString = fs.readFileSync(
-            `${packageDirectory}/package.json`,
-            "utf-8"
-        );
+        const pkgString = fs.readFileSync(`${packageDirectory}/package.json`, "utf-8");
         const pkg: PackageJson = JSON.parse(pkgString);
         return pkg;
     };
 
     const setPackage = (pkg: PackageJson) => {
-        fs.writeFileSync(
-            `${packageDirectory}/package.json`,
-            JSON.stringify(pkg, null, 4)
-        );
+        fs.writeFileSync(`${packageDirectory}/package.json`, JSON.stringify(pkg, null, 4));
     };
 
     const getDependencies = (type: DependencyType) => {
         const pkg = getPackage();
-        let dependencies =
-            type === "deps" ? pkg.dependencies : pkg.devDependencies;
+        let dependencies = type === "deps" ? pkg.dependencies : pkg.devDependencies;
 
         if (!dependencies) {
             dependencies = {};
@@ -35,10 +28,7 @@ export const cliCreator = (command: Command, name: string) => {
         return dependencies;
     };
 
-    const setDependencies = (
-        type: DependencyType,
-        deps: Partial<Record<string, string>>
-    ) => {
+    const setDependencies = (type: DependencyType, deps: Partial<Record<string, string>>) => {
         const pkg = getPackage();
         if (type === "deps") {
             pkg.dependencies = deps;

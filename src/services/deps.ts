@@ -23,16 +23,9 @@ const getPreSelectedDeps = ({
     return preSelectedDeps;
 };
 
-const getPossibleDeps = (command: Command, type: DependencyType) =>
-    getDeps(command, type);
+const getPossibleDeps = (command: Command, type: DependencyType) => getDeps(command, type);
 
-export const selectDependencies = async ({
-    type,
-    cliConfig,
-}: {
-    type: DependencyType;
-    cliConfig: CliConfig;
-}) => {
+export const selectDependencies = async ({ type, cliConfig }: { type: DependencyType; cliConfig: CliConfig }) => {
     const isDependencies = type === "deps";
     const dependencies = cliConfig.getDependencies(type);
     const depsText = isDependencies ? "dependencies" : "devDependencies";
@@ -69,9 +62,7 @@ export const selectDependencies = async ({
     const s = spinner();
     s.start(`Installing ${depsText}`);
 
-    const notInstalledDeps = answers.filter(
-        (dep) => !preSelectedDeps.includes(dep)
-    );
+    const notInstalledDeps = answers.filter((dep) => !preSelectedDeps.includes(dep));
 
     if (notInstalledDeps.length > 0) {
         const installAction = await cli(
@@ -86,16 +77,10 @@ export const selectDependencies = async ({
         }
     }
 
-    const depsToRemove = preSelectedDeps.filter(
-        (dep) => !answers.includes(dep)
-    );
+    const depsToRemove = preSelectedDeps.filter((dep) => !answers.includes(dep));
 
     if (depsToRemove.length > 0) {
-        const removeAction = await cli(
-            "pnpm",
-            ["remove", ...depsToRemove],
-            options
-        );
+        const removeAction = await cli("pnpm", ["remove", ...depsToRemove], options);
 
         if (!removeAction) {
             s.stop(`Failed to remove ${depsText} ❌`);

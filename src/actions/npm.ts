@@ -67,11 +67,7 @@ const install = async (cliConfig: CliConfig) => {
 const update = async (cliConfig: CliConfig) => {
     s.start("Updating to latest versions");
 
-    const updateAction = await cli(
-        "pnpm",
-        ["up", "--latest"],
-        cliConfig.options
-    );
+    const updateAction = await cli("pnpm", ["up", "--latest"], cliConfig.options);
 
     if (!updateAction) {
         s.stop(`Failed to update dependencies ❌`);

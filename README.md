@@ -2,7 +2,6 @@
 
 [![NPM version](https://img.shields.io/npm/v/startler?color=%23c53635&label=%20)](https://www.npmjs.com/package/startler)
 
-
 ![](/.github/assets/startler.png)
 
 A simple CLI application to kickstart new projects.
@@ -46,11 +45,11 @@ Simple lib template using TypeScript, Esno, Tsup, Vitest, Husky and more. All fi
 
 ### userscript
 
-Easily get going with a new userscript. All things preconfigured. Uses Vite and `vite-plugin-monkey` to make development easy. 
+Easily get going with a new userscript. All things preconfigured. Uses Vite and `vite-plugin-monkey` to make development easy.
 
 ### cli
 
-Much like the `lib` template but more tweaked towards having good defaults for a CLI application. 
+Much like the `lib` template but more tweaked towards having good defaults for a CLI application.
 
 ### firebase
 
