@@ -10,7 +10,8 @@
         "plugin:unicorn/recommended",
         "plugin:import/recommended",
         "plugin:promise/recommended",
-        "plugin:n/recommended"
+        "plugin:n/recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "plugins": ["@typescript-eslint", "unicorn", "import", "promise", "unused-imports", "json"],
