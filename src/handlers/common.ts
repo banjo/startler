@@ -1,5 +1,5 @@
 import { intro, outro } from "@clack/prompts";
-import { existsSync } from "fs";
+import { existsSync } from "node:fs";
 import { Applications } from "../actions/applications";
 import { Files } from "../actions/files";
 import { Git } from "../actions/git";

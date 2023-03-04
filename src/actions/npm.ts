@@ -1,6 +1,6 @@
 import { isNil } from "@banjoanton/utils";
 import { isCancel, outro, select, spinner } from "@clack/prompts";
-import { writeFileSync } from "fs";
+import { writeFileSync } from "node:fs";
 import { CliConfig } from "../cliCreator";
 import { cli, exitOnFail, getNodeVersions } from "../misc/utils";
 
@@ -41,12 +41,12 @@ const selectNodeVersion = async (cliConfig: CliConfig, onlyLts = false) => {
         const tagString = `v${String(nodeVersion)}`;
         writeFileSync(`./${cliConfig.name}/.nvmrc`, tagString);
 
-        const pkg = cliConfig.getPackage();
-        if (pkg?.engines?.node) {
-            pkg.engines.node = tag;
+        const package_ = cliConfig.getPackage();
+        if (package_?.engines?.node) {
+            package_.engines.node = tag;
         }
 
-        cliConfig.setPackage(pkg);
+        cliConfig.setPackage(package_);
 
         s.start();
         s.stop(`Updated node version to ${tagString} ✅`);

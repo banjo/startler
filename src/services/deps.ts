@@ -33,7 +33,7 @@ export const selectDependencies = async ({ type, cliConfig }: { type: Dependency
 
     const preSelectedDeps = getPreSelectedDeps({
         type,
-        command: cliConfig.command,
+        command: command,
         depsFromPackage: Object.keys(dependencies ?? []),
     });
 

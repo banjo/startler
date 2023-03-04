@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 import { PackageJson } from "type-fest";
 import { Command, DependencyType } from "./misc/types";
 import { optionsForCli } from "./misc/utils";
@@ -8,18 +8,18 @@ export const cliCreator = (command: Command, name: string) => {
     const packageDirectory = options.cwd;
 
     const getPackage = (): PackageJson => {
-        const pkgString = fs.readFileSync(`${packageDirectory}/package.json`, "utf-8");
-        const pkg: PackageJson = JSON.parse(pkgString);
-        return pkg;
+        const packageString = fs.readFileSync(`${packageDirectory}/package.json`, "utf8");
+        const package_: PackageJson = JSON.parse(packageString);
+        return package_;
     };
 
-    const setPackage = (pkg: PackageJson) => {
-        fs.writeFileSync(`${packageDirectory}/package.json`, JSON.stringify(pkg, null, 4));
+    const setPackage = (package_: PackageJson) => {
+        fs.writeFileSync(`${packageDirectory}/package.json`, JSON.stringify(package_, null, 4));
     };
 
     const getDependencies = (type: DependencyType) => {
-        const pkg = getPackage();
-        let dependencies = type === "deps" ? pkg.dependencies : pkg.devDependencies;
+        const package_ = getPackage();
+        let dependencies = type === "deps" ? package_.dependencies : package_.devDependencies;
 
         if (!dependencies) {
             dependencies = {};
@@ -29,14 +29,14 @@ export const cliCreator = (command: Command, name: string) => {
     };
 
     const setDependencies = (type: DependencyType, deps: Partial<Record<string, string>>) => {
-        const pkg = getPackage();
+        const package_ = getPackage();
         if (type === "deps") {
-            pkg.dependencies = deps;
+            package_.dependencies = deps;
         } else {
-            pkg.devDependencies = deps;
+            package_.devDependencies = deps;
         }
 
-        setPackage(pkg);
+        setPackage(package_);
     };
 
     return {

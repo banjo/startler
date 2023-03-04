@@ -39,14 +39,16 @@ const gitHooks = async (cliConfig: CliConfig) => {
     s.start(`Installing ${gitHooksApp}`);
 
     switch (gitHooksApp) {
-        case "simple-git-hooks":
+        case "simple-git-hooks": {
             await husky.uninstall(cliConfig);
             await simpleGitHooks.install(cliConfig);
             break;
-        case "husky":
+        }
+        case "husky": {
             await simpleGitHooks.uninstall(cliConfig);
             await husky.install(cliConfig);
             break;
+        }
     }
 
     s.stop(`Installed ${gitHooksApp} ✅`);

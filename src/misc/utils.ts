@@ -6,23 +6,23 @@ import { common } from "../handlers/common";
 import { Runtime } from "./runtime";
 import { Command, Handler } from "./types";
 
-export const cli = async (command: string, args: string[], options?: Options & { logError?: boolean }) => {
+export const cli = async (command: string, arguments_: string[], options?: Options & { logError?: boolean }) => {
     try {
-        const { stdout, stderr, command: stdin } = await execa(command, args, options);
+        const { stdout, stderr, command: stdin } = await execa(command, arguments_, options);
         return { stdout, stderr, stdin };
-    } catch (error) {
-        let e: Error;
+    } catch (error_) {
+        let error: Error;
 
-        if (typeof error === "string") {
-            e = new Error(error);
-        } else if (error instanceof Error) {
-            e = error;
+        if (typeof error_ === "string") {
+            error = new Error(error_);
+        } else if (error_ instanceof Error) {
+            error = error_;
         } else {
-            e = new Error("Unknown error");
+            error = new Error("Unknown error");
         }
 
         if (options?.logError || Runtime.isDebugging()) {
-            console.error(e);
+            console.error(error);
         }
 
         return null;

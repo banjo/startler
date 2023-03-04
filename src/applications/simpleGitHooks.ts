@@ -9,15 +9,15 @@ const install = async (cliConfig: CliConfig): Promise<boolean> => {
         return false;
     }
 
-    const pkg = cliConfig.getPackage();
-    pkg["simple-git-hooks"] = {
+    const package_ = cliConfig.getPackage();
+    package_["simple-git-hooks"] = {
         "pre-commit": "pnpm exec lint-staged",
     };
 
-    pkg["ling-staged"] = {
+    package_["ling-staged"] = {
         "*": ["prettier --write --ignore-unknown", "eslint --fix"],
     };
-    cliConfig.setPackage(pkg);
+    cliConfig.setPackage(package_);
 
     await cli("git", ["config", "core.hooksPath", ".git/hooks/"]);
     await cli("rm", ["-rf", ".git/hooks"]);
@@ -27,12 +27,12 @@ const install = async (cliConfig: CliConfig): Promise<boolean> => {
 };
 
 const uninstall = (cliConfig: CliConfig): boolean => {
-    const pkg = cliConfig.getPackage();
-    delete pkg.devDependencies?.["simple-git-hooks"];
-    delete pkg.devDependencies?.["lint-staged"];
-    delete pkg?.["simple-git-hooks"];
-    delete pkg?.["lint-staged"];
-    cliConfig.setPackage(pkg);
+    const package_ = cliConfig.getPackage();
+    delete package_.devDependencies?.["simple-git-hooks"];
+    delete package_.devDependencies?.["lint-staged"];
+    delete package_?.["simple-git-hooks"];
+    delete package_?.["lint-staged"];
+    cliConfig.setPackage(package_);
 
     return true;
 };

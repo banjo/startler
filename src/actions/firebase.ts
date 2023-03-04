@@ -1,5 +1,5 @@
 import { confirm, isCancel, outro, spinner } from "@clack/prompts";
-import { existsSync, mkdirSync, rmSync } from "fs";
+import { existsSync, mkdirSync, rmSync } from "node:fs";
 import { CliConfig } from "../cliCreator";
 import { cli, exitOnFail } from "../misc/utils";
 import { Git } from "./git";
@@ -46,16 +46,16 @@ const installCli = async () => {
 };
 
 const init = async (cliConfig: CliConfig) => {
-    const tempName = cliConfig.name + "-temp";
+    const temporaryName = cliConfig.name + "-temp";
 
-    if (existsSync(tempName)) {
-        rmSync(tempName, { recursive: true });
+    if (existsSync(temporaryName)) {
+        rmSync(temporaryName, { recursive: true });
     }
 
-    mkdirSync(tempName);
+    mkdirSync(temporaryName);
 
     await cli("firebase", ["init", "functions"], {
-        cwd: tempName,
+        cwd: temporaryName,
         stdio: "inherit",
     });
 
@@ -64,14 +64,18 @@ const init = async (cliConfig: CliConfig) => {
 
     s.start("Preparing Firebase");
 
-    const moveAction = await cli("mv", [`${tempName}/.firebaserc`, `${tempName}/firebase.json`, cliConfig.name]);
+    const moveAction = await cli("mv", [
+        `${temporaryName}/.firebaserc`,
+        `${temporaryName}/firebase.json`,
+        cliConfig.name,
+    ]);
 
     if (!moveAction) {
         exitOnFail();
         return false;
     }
 
-    rmSync(tempName, { recursive: true });
+    rmSync(temporaryName, { recursive: true });
 
     s.stop("Prepared Firebase ✅");
 
