@@ -6,17 +6,13 @@ import { common } from "../handlers/common";
 import { Runtime } from "./runtime";
 import { Command, Handler } from "./types";
 
-export const cli = async (
-    command: string,
-    args: string[],
-    options?: Options & { logError?: boolean },
-    errorHandler?: (error: Error) => void
-) => {
+export const cli = async (command: string, args: string[], options?: Options & { logError?: boolean }) => {
     try {
         const { stdout, stderr, command: stdin } = await execa(command, args, options);
         return { stdout, stderr, stdin };
     } catch (error) {
         let e: Error;
+
         if (typeof error === "string") {
             e = new Error(error);
         } else if (error instanceof Error) {
@@ -25,12 +21,8 @@ export const cli = async (
             e = new Error("Unknown error");
         }
 
-        if (errorHandler) {
-            errorHandler(e);
-        } else {
-            if (options?.logError || Runtime.isDebugging()) {
-                console.error(error);
-            }
+        if (options?.logError || Runtime.isDebugging()) {
+            console.error(e);
         }
 
         return null;
@@ -56,7 +48,9 @@ export const createCommand = (command: Command, handler?: Handler): CommandType 
             },
         },
         async argv => {
-            if (argv.flags.debug) Runtime.setDebug(true);
+            if (argv.flags.debug) {
+                Runtime.setDebug(true);
+            }
 
             if (handler) {
                 await handler(command, argv._.name);
@@ -91,7 +85,9 @@ export const exitOnFail = (error?: string) => {
 
 export const getNodeVersions = async () => {
     const { majors } = await allNodeVersions();
-    if (!majors) return null;
+    if (!majors) {
+        return null;
+    }
 
     return majors;
 };

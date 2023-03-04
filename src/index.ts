@@ -21,5 +21,5 @@ cli(
             description: "Kickstart a new project easily with good defaults ✅",
         },
     },
-    async argv => argv.showHelp()
+    argv => argv.showHelp()
 );

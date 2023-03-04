@@ -9,7 +9,7 @@ const s = spinner();
 const selectNodeVersion = async (cliConfig: CliConfig, onlyLts = false) => {
     s.start("Fetching node versions");
 
-    let versions = await getNodeVersions();
+    const versions = await getNodeVersions();
 
     if (isNil(versions)) {
         console.log("Failed to fetch node versions");
@@ -45,6 +45,7 @@ const selectNodeVersion = async (cliConfig: CliConfig, onlyLts = false) => {
         if (pkg?.engines?.node) {
             pkg.engines.node = tag;
         }
+
         cliConfig.setPackage(pkg);
 
         s.start();

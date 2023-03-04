@@ -18,7 +18,7 @@ const getPreSelectedDeps = ({
     command: Command;
     type: DependencyType;
 }) => {
-    let deps = getDeps(command, type);
+    const deps = getDeps(command, type);
     const preSelectedDeps = depsFromPackage.filter(dep => deps.includes(dep));
     return preSelectedDeps;
 };

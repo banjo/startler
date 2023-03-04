@@ -26,7 +26,7 @@ const install = async (cliConfig: CliConfig): Promise<boolean> => {
     return true;
 };
 
-const uninstall = async (cliConfig: CliConfig): Promise<boolean> => {
+const uninstall = (cliConfig: CliConfig): boolean => {
     const pkg = cliConfig.getPackage();
     delete pkg.devDependencies?.["simple-git-hooks"];
     delete pkg.devDependencies?.["lint-staged"];
