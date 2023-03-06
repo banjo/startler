@@ -1,4 +1,3 @@
 {
-    "extends": ["@banjoanton/eslint-config-prettier"],
-    "parser": "@typescript-eslint/parser"
+    "extends": ["@banjoanton/eslint-config", "@banjoanton/eslint-config-prettier"]
 }
