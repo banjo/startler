@@ -46,7 +46,7 @@ const installCli = async () => {
 };
 
 const init = async (cliConfig: CliConfig) => {
-    const temporaryName = cliConfig.name + "-temp";
+    const temporaryName = `${cliConfig.name}-temp`;
 
     if (existsSync(temporaryName)) {
         rmSync(temporaryName, { recursive: true });

@@ -25,7 +25,13 @@ const getPreSelectedDeps = ({
 
 const getPossibleDeps = (command: Command, type: DependencyType) => getDeps(command, type);
 
-export const selectDependencies = async ({ type, cliConfig }: { type: DependencyType; cliConfig: CliConfig }) => {
+export const selectDependencies = async ({
+    type,
+    cliConfig,
+}: {
+    type: DependencyType;
+    cliConfig: CliConfig;
+}) => {
     const isDependencies = type === "deps";
     const dependencies = cliConfig.getDependencies(type);
     const depsText = isDependencies ? "dependencies" : "devDependencies";

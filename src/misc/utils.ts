@@ -6,7 +6,11 @@ import { common } from "../handlers/common";
 import { Runtime } from "./runtime";
 import { Command, Handler } from "./types";
 
-export const cli = async (command: string, arguments_: string[], options?: Options & { logError?: boolean }) => {
+export const cli = async (
+    command: string,
+    arguments_: string[],
+    options?: Options & { logError?: boolean }
+) => {
     try {
         const { stdout, stderr, command: stdin } = await execa(command, arguments_, options);
         return { stdout, stderr, stdin };

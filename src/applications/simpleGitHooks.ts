@@ -2,7 +2,11 @@ import { CliConfig } from "../cliCreator";
 import { cli, exitOnFail } from "../misc/utils";
 
 const install = async (cliConfig: CliConfig): Promise<boolean> => {
-    const sghAction = await cli("pnpm", ["install", "simple-git-hooks", "lint-staged", "-D"], cliConfig.options);
+    const sghAction = await cli(
+        "pnpm",
+        ["install", "simple-git-hooks", "lint-staged", "-D"],
+        cliConfig.options
+    );
 
     if (!sghAction) {
         exitOnFail();
