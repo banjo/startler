@@ -18,7 +18,6 @@ export const DEPS: Dependencies & { common: Dependency } = {
             "case-police",
             "bumpp",
             "eslint",
-            "pnpm",
             "prettier",
             "type-fest",
             "@total-typescript/ts-reset",
