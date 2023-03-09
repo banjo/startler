@@ -2,10 +2,12 @@ import { CliConfig } from "../cliCreator";
 import { cli, exitOnFail } from "../misc/utils";
 
 const install = async (cliConfig: CliConfig): Promise<boolean> => {
+    const { options } = cliConfig;
+
     const sghAction = await cli(
         "pnpm",
         ["install", "simple-git-hooks", "lint-staged", "-D"],
-        cliConfig.options
+        options
     );
 
     if (!sghAction) {
@@ -23,9 +25,9 @@ const install = async (cliConfig: CliConfig): Promise<boolean> => {
     };
     cliConfig.setPackage(package_);
 
-    await cli("git", ["config", "core.hooksPath", ".git/hooks/"]);
-    await cli("rm", ["-rf", ".git/hooks"]);
-    await cli("pnpm", ["exec", "simple-git-hooks"]);
+    await cli("git", ["config", "core.hooksPath", ".git/hooks/"], options);
+    await cli("rm", ["-rf", ".git/hooks"], options);
+    await cli("pnpm", ["exec", "simple-git-hooks"], options);
 
     return true;
 };
