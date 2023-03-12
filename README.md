@@ -1,10 +1,10 @@
 # startler
 
-[![NPM version](https://img.shields.io/npm/v/startler?color=%23c53635&label=%20)](https://www.npmjs.com/package/startler)
-
-![](/.github/assets/startler.png)
-
 A simple CLI application to kickstart new projects.
+
+![Startler image](/.github/assets/startler.png)
+
+[![NPM version](https://img.shields.io/npm/v/startler?color=%23c53635&label=%20)](https://www.npmjs.com/package/startler)
 
 -   :hourglass: - Get up and running in seconds
 -   :speech_balloon: - Simple dependency management - add or remove directly
