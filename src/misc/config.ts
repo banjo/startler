@@ -24,7 +24,7 @@ export const DEPS: Dependencies & { common: Dependency } = {
         ],
     },
     userscript: {
-        deps: ["@banjoanton/spa-runner", "toastler"],
+        deps: ["@banjoanton/spa-runner", "toastler", "cash-dom"],
         devDeps: [],
     },
     cli: {
@@ -36,7 +36,7 @@ export const DEPS: Dependencies & { common: Dependency } = {
         devDeps: [],
     },
     firebase: {
-        deps: ["axios"],
+        deps: [],
         devDeps: [],
     },
 };
