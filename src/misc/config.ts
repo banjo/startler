@@ -11,7 +11,7 @@ export const SOURCES: Record<Command, string> = {
 
 export const DEPS: Dependencies & { common: Dependency } = {
     common: {
-        deps: ["ky", "debug"],
+        deps: ["ky", "debug", "ts-results"],
         devDeps: [
             "@antfu/ni",
             "@banjoanton/utils",
