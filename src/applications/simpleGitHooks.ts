@@ -36,6 +36,7 @@ const uninstall = (cliConfig: CliConfig): boolean => {
     const package_ = cliConfig.getPackage();
     delete package_.devDependencies?.["simple-git-hooks"];
     delete package_.devDependencies?.["lint-staged"];
+    delete package_.devDependencies?.["git-install-hook"];
     delete package_?.["simple-git-hooks"];
     delete package_?.["lint-staged"];
     cliConfig.setPackage(package_);
