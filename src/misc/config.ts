@@ -11,11 +11,10 @@ export const SOURCES: Record<Command, string> = {
 
 export const DEPS: Dependencies & { common: Dependency } = {
     common: {
-        deps: ["@banjoanton/replacer", "ky"],
+        deps: ["ky", "debug"],
         devDeps: [
             "@antfu/ni",
             "@banjoanton/utils",
-            "case-police",
             "bumpp",
             "eslint",
             "prettier",
