@@ -1,5 +1,5 @@
 import { isNil } from "@banjoanton/utils";
-import { isCancel, outro, select, spinner } from "@clack/prompts";
+import { confirm, isCancel, outro, select, spinner } from "@clack/prompts";
 import { writeFileSync } from "node:fs";
 import { CliConfig } from "../cliCreator";
 import { cli, exitOnFail, getNodeVersions } from "../misc/utils";
@@ -66,9 +66,20 @@ const install = async (cliConfig: CliConfig) => {
 };
 
 const update = async (cliConfig: CliConfig) => {
+    const shouldUpdate = await confirm({
+        message: "Do you want to update to the latest versions?",
+        active: "Yes",
+        inactive: "No",
+        initialValue: true,
+    });
+
+    if (!shouldUpdate) {
+        return;
+    }
+
     s.start("Updating to latest versions");
 
-    const updateAction = await cli("pnpm", ["up", "--latest"], cliConfig.options);
+    const updateAction = await cli("pnpm", ["up", "--latest", "--recursive"], cliConfig.options);
 
     if (!updateAction) {
         s.stop(`Failed to update dependencies ❌`);
