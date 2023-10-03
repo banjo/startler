@@ -1,4 +1,4 @@
-export const commands = ["lib", "userscript", "cli", "firebase", "monorepo"] as const;
+export const commands = ["lib", "userscript", "cli", "firebase", "monorepo", "react"] as const;
 export type Command = (typeof commands)[number];
 
 export type Dependency = { deps: string[]; devDeps: string[] };

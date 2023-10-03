@@ -16,6 +16,7 @@ cli(
             createCommand("userscript"),
             createCommand("cli"),
             createCommand("monorepo"),
+            createCommand("react"),
             createCommand("firebase", firebase),
         ],
         help: {

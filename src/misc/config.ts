@@ -8,6 +8,7 @@ export const SOURCES: Record<Command, string> = {
     cli: "git@github.com:banjo/cli-starter.git",
     firebase: "git@github.com:banjo/firebase-starter.git",
     monorepo: "git@github.com:banjo/monorepo-starter",
+    react: "git@github.com:banjo/react-starter.git",
 };
 
 export const DEPS: Dependencies & { common: Dependency } = {
@@ -40,6 +41,10 @@ export const DEPS: Dependencies & { common: Dependency } = {
         devDeps: [],
     },
     monorepo: {
+        deps: [],
+        devDeps: [],
+    },
+    react: {
         deps: [],
         devDeps: [],
     },
