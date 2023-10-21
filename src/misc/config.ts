@@ -13,12 +13,13 @@ export const SOURCES: Record<Command, string> = {
 
 export const DEPS: Dependencies & { common: Dependency } = {
     common: {
-        deps: ["debug"],
+        deps: ["ufo", "listhen"],
         devDeps: [
             "@antfu/ni",
             "@banjoanton/utils",
             "bumpp",
             "eslint",
+            "tsx",
             "prettier",
             "type-fest",
             "@total-typescript/ts-reset",
@@ -29,11 +30,18 @@ export const DEPS: Dependencies & { common: Dependency } = {
         devDeps: [],
     },
     cli: {
-        deps: ["execa", "picocolors", "prompts", "type-flag"],
-        devDeps: ["@clack/prompts", "@types/minimist", "@types/prompts", "minimist", "cleye"],
+        deps: ["execa", "picocolors", "prompts", "type-flag", "consola", "pathe", "defu"],
+        devDeps: [
+            "@clack/prompts",
+            "@types/minimist",
+            "@types/prompts",
+            "minimist",
+            "cleye",
+            "knitwork",
+        ],
     },
     lib: {
-        deps: ["globby"],
+        deps: ["globby", "pathe", "defu"],
         devDeps: [],
     },
     firebase: {
