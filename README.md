@@ -54,3 +54,26 @@ Much like the `lib` template but more tweaked towards having good defaults for a
 ### firebase
 
 Simple starter with Firebase functions, updated to use `tsup` and some other things to improve DX.
+
+### monorepo
+
+Monorepo starter template with my favorite defaults:
+
+* TypeScript
+* React
+* Tailwind CSS
+* Shadcn
+* Vite
+* Express
+* TRPc
+* Turborepo
+* Prisma
+* Dokku
+* Docker
+* ESLint
+* Prettier
+* Hoks
+
+### react
+
+Simple React starter with Typescript, Tailwind, Shadcn, Vite, ESLint, Prettier, Hoks and some more things. 
