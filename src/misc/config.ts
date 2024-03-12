@@ -30,15 +30,20 @@ export const DEPS: Dependencies & { common: Dependency } = {
         devDeps: [],
     },
     cli: {
-        deps: ["execa", "picocolors", "prompts", "type-flag", "consola", "pathe", "defu"],
-        devDeps: [
+        deps: [
+            "execa",
+            "picocolors",
+            "prompts",
+            "type-flag",
+            "consola",
+            "pathe",
+            "defu",
             "@clack/prompts",
-            "@types/minimist",
-            "@types/prompts",
             "minimist",
             "cleye",
-            "knitwork",
+            "citty",
         ],
+        devDeps: ["@types/minimist", "@types/prompts", "knitwork"],
     },
     lib: {
         deps: ["globby", "pathe", "defu"],
